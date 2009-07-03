@@ -1,6 +1,6 @@
 h1. Attribute Normalizer
 
-p. I like to keep my active record models as strict as possible but I also like the further layer of protection/restriction on the data that setting your database columns to not allow NULL ads to columns where there is going to be a validates_presence_of.
+p. I like to keep my Active Record models as strict as possible but I also like the further layer of protection/restriction setting database columns to not allow NULL adds.  Normalizing to nil helps enforce this better by not letting '' slip through the cracks and I can still prevent those who insist on direct DB access from entering in shitty data as much as possible.
 
 h2. Install as a Ruby gem
 
