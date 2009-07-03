@@ -1,5 +1,7 @@
 h1. Attribute Normalizer
 
+p. I like to keep my active record models as strict as possible but I also like the further layer of protection/restriction on the data that setting your database columns to not allow NULL ads to columns where there is going to be a validates_presence_of.
+
 h2. Install as a Ruby gem
 
   TODO: gem-er-a-size this!
@@ -21,7 +23,34 @@ or for all you hip gitsters.
   
 h2. Usage
 
-This eager loaded into Active Record
+This is eager loaded into Active Record.
+
+<pre><code>
+Klass < ActiveRecord::Base
+  
+  # Can take an array of attributes if you want
+  normalize_attributes :first_name, :last_name
+  
+  normalize_attributes :home_phone_number, :office_phone_number_ do |value|
+    return nil unless value.is_a?(String)
+    value.gsub(/\W/, '').gsub(/^1/, '')
+  end
+  
+end
+
+object = Klass.new
+# Blank normalizes to nil
+object.first_name = ''
+object.first_name # => nil
+
+# Whitespace is cleaned up 
+object.last_name = "\tDeering\n"
+object.last_name # => 'Deering'
+
+# Your given block will be executed to normalize
+object.home_phone_number = '+1 (555) 123.4567'
+object.home_phone_number # => '5551234567'
+</code></pre>
 
 h3. Credits
 
