@@ -1,0 +1,28 @@
+h1. Attribute Normalizer
+
+h2. Install as a Ruby gem
+
+  TODO: gem-er-a-size this!
+  
+h2. Install as a Ruby on Rails Plugin
+
+The traditional way.
+
+  ./script/plugin install git://github.com/mdeering/attribute_normalizer.git
+  
+or the old-school but still c00l way!
+
+  piston import git://github.com/mdeering/attribute_normalizer.git vendor/plugins/attribute_normalizer
+  
+or for all you hip gitsters.
+
+  git submodule add git://github.com/mdeering/attribute_normalizer.git vendor/plugins/attribute_normalizer
+  git submodule init
+  
+h2. Usage
+
+This eager loaded into Active Record
+
+h3. Credits
+
+Original module code and concept was taken from "Dan Kubb":http://github.com/dkubb during a project we worked on together.  I found that I was consistently using this across all my projects so I wanted to plugin-er-size and gem this up for easy reuse.
