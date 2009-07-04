@@ -13,7 +13,7 @@ module AttributeNormalizer
         klass = class << self; self end
 
         klass.send :define_method, "normalize_#{attribute}" do |value|
-          value.strip! if value.is_a?(String)
+          value = value.strip if value.is_a?(String)
           normalized = block_given? && !value.blank? ? yield(value) : value
           normalized.blank? ? nil : normalized
         end
