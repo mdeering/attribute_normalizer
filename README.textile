@@ -26,7 +26,7 @@ h2. Usage
 This is eager loaded into Active Record.
 
 <pre><code>
-Klass < ActiveRecord::Base
+class Klass < ActiveRecord::Base
   
   # Can take an array of attributes if you want
   normalize_attributes :first_name, :last_name
