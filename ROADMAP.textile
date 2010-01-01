@@ -1,0 +1,32 @@
+h1. 0.2.0
+
+* Allow for specification of reusable normalization blocks.
+p. Specify a normalization block somewhere before your model load.
+
+p. Note: _syntax and convention is just a thought right now, still in flux and not yet tested_
+
+<pre><code>ActiveRecord::Base.normalization_block :phone_numbers do |value|
+ value.gsub(/\W/, '').gsub(/^1/, '')
+end
+</code></pre>
+
+p. Then from any of your models this block can be reused.
+
+<pre><code>normalize_attributes :home_phone_number, :office_phone_number, :as => :phone_numbers</code></pre>
+
+p. _alternate sytax/convention_
+
+<pre><code>ActiveRecord::Base.normalization_block :phone_number_normalization do |value|
+ value.gsub(/\W/, '').gsub(/^1/, '')
+end
+
+normalize_attributes :home_phone_number, :office_phone_number, :with => :phone_number_normalization
+</code></pre>
+
+h1. 0.1.1
+* Alias _normalize_attribute_ to _normalize_attributes_ for syntactical sugar based on "suggestion here":http://mdeering.com/posts/019-activerecord-attribute-normalization-rails-plugin#comments
+* Use calls to super for attribute setting to avoid bypassing other plugins and gems and issues with calling reload on the model.
+h1. 0.1.0
+* Documentation fixes and updates.
+* Rspec fixes and updates.
+* -Take the existing code that is a rails plugin only and turn it into a proper Ruby gem hosted over at "Gemcutter":http://gemcutter.org-

@@ -15,7 +15,7 @@ module AttributeNormalizer
         klass.send :define_method, "normalize_#{attribute}" do |value|
           value = value.strip if value.is_a?(String)
           normalized = block_given? && !value.blank? ? yield(value) : value
-          normalized.blank? ? nil : normalized
+          normalized.nil? || (normalized.is_a?(String) && normalized == '') ? nil : normalized
         end
 
         klass.send :private, "normalize_#{attribute}"
@@ -31,9 +31,9 @@ module AttributeNormalizer
         end_src
 
         module_eval src, __FILE__, __LINE__
-        
+
       end
-      
+
     end
   end
 end

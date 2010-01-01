@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'spec'
 require 'activesupport'
+require 'activerecord'
 
 Spec::Runner.configure do |config|
 end

@@ -1,1 +1,1 @@
-puts IO.read(File.join(File.dirname(__FILE__), 'README.textile'))
+puts IO.read(File.join(File.dirname(__FILE__), 'install.txt'))
