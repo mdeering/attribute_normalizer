@@ -101,3 +101,23 @@ describe 'with an instance' do
   end
 
 end
+
+describe 'normalize_attribute is aliased to normalize_attributes' do
+  before do
+    User.class_eval do
+      normalize_attribute :name
+    end
+    @user = User.new
+  end
+
+  {
+    ' spaces in front and back ' => 'spaces in front and back',
+    "\twe hate tabs!\t"          => 'we hate tabs!'
+  }.each do |key, value|
+    it "should normalize '#{key}' to '#{value}'" do
+      @user.name = key
+      @user.name.should == value
+    end
+  end
+
+end
