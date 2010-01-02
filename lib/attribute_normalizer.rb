@@ -22,11 +22,12 @@ module AttributeNormalizer
 
         src = <<-end_src
           def #{attribute}
-            @#{attribute} ||= self.class.send(:normalize_#{attribute}, self[:#{attribute}]) unless self[:#{attribute}].nil?
+            value = super
+            value.nil? ? value : self.class.send(:normalize_#{attribute}, value)
           end
 
           def #{attribute}=(#{attribute})
-            @#{attribute} = self[:#{attribute}] = self.class.send(:normalize_#{attribute}, #{attribute})
+            super(self.class.send(:normalize_#{attribute}, #{attribute}))
           end
         end_src
 

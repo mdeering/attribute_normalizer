@@ -71,13 +71,10 @@ end
 describe 'with an instance' do
 
   before do
-    class Klass
-      attr_accessor :attribute
-      include AttributeNormalizer
-      normalize_attributes :attribute
+    User.class_eval do
+      normalize_attributes :name
     end
-
-    @object = Klass.new
+    @user = User.new
   end
 
   {
@@ -85,10 +82,22 @@ describe 'with an instance' do
     "\twe hate tabs!\t"          => 'we hate tabs!'
   }.each do |key, value|
     it "should normalize '#{key}' to '#{value}'" do
-      @object.send('attribute=', key)
-      @object.send(:attribute).should == value
+      @user.name = key
+      @user.name.should == value
     end
   end
 
+  context 'when another instance of the same saved record has been changed' do
+
+    before do
+      @user = User.create!(:name => 'Jimi Hendrix')
+      @user2 = User.find(@user.id)
+      @user2.update_attributes(:name => 'Thom Yorke')
+    end
+
+    it "should reflect the change when the record is reloaded" do
+      lambda { @user.reload }.should change(@user, :name).from('Jimi Hendrix').to('Thom Yorke')
+    end
+  end
 
 end
