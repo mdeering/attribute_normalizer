@@ -26,6 +26,10 @@ Your gem sources are now:
 - http://gems.github.com
 </code></pre>
 
+h3. Install the Attribute Normalizer gem
+
+<pre><code>sudo gem install attribute_normalizer</code></pre>
+
 h2. Install as a Ruby on Rails Plugin
 
 The traditional way.
@@ -52,8 +56,7 @@ class Klass < ActiveRecord::Base
   normalize_attributes :first_name, :last_name
 
   normalize_attributes :home_phone_number, :office_phone_number_ do |value|
-    return nil unless value.is_a?(String)
-    value.gsub(/\W/, '').gsub(/^1/, '')
+    value.is_a?(String) ? value.gsub(/\W/, '').gsub(/^1/, '') : nil
   end
 
 end

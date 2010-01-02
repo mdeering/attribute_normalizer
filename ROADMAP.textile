@@ -24,9 +24,12 @@ normalize_attributes :home_phone_number, :office_phone_number, :with => :phone_n
 </code></pre>
 
 h1. 0.1.1
+
 * -Alias _normalize_attribute_ to _normalize_attributes_ for syntactical sugar based on "suggestion here":http://mdeering.com/posts/019-activerecord-attribute-normalization-rails-plugin#comments-
-* -Use calls to super for attribute setting to avoid bypassing other plugins and gems and issues with calling reload on the model.-
+* -Use calls to super for attribute setting to avoid bypassing other plugins and gems and issues with calling reload on the model.- "Myron Marston":http://github.com/myronmarston
+
 h1. 0.1.0
+
 * -Documentation fixes and updates.-
 * -Rspec fixes and updates.-
 * -Take the existing code that is a rails plugin only and turn it into a proper Ruby gem hosted over at "Gemcutter":http://gemcutter.org-
