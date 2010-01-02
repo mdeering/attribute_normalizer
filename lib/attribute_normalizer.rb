@@ -35,9 +35,10 @@ module AttributeNormalizer
 
       end
 
-      alias :normalize_attribute :normalize_attributes
-
     end
+
+    alias :normalize_attribute :normalize_attributes
+
   end
 end
 
