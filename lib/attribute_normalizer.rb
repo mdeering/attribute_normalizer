@@ -37,3 +37,5 @@ module AttributeNormalizer
     end
   end
 end
+
+ActiveRecord::Base.send(:include, AttributeNormalizer)
