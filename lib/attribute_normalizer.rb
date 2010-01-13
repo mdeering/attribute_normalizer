@@ -26,8 +26,8 @@ module AttributeNormalizer
             value.nil? ? value : self.class.send(:normalize_#{attribute}, value)
           end
 
-          def #{attribute}=(#{attribute})
-            super(self.class.send(:normalize_#{attribute}, #{attribute}))
+          def #{attribute}=(value)
+            super(self.class.send(:normalize_#{attribute}, value))
           end
         end_src
 
