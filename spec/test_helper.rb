@@ -6,6 +6,7 @@ require 'active_record'
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 require 'attribute_normalizer'
 
+
 AttributeNormalizer.configure do |config|
 
   config.normalizers[:currency] = lambda do |value, options|
@@ -25,33 +26,11 @@ AttributeNormalizer.configure do |config|
 
 end
 
-ActiveRecord::Base.establish_connection({ :database => ":memory:", :adapter => 'sqlite3', :timeout => 500 })
 
-ActiveRecord::Schema.define do
-  create_table :books, :force => true do |t|
-    t.string  :author
-    t.string  :isbn
-    t.decimal :price
-    t.string  :summary
-    t.string  :title
-  end
-end
+require 'connection_and_schema'
+require 'models/book'
 
-class Book < ActiveRecord::Base
-
-  normalize_attribute  :author
-
-  normalize_attribute  :price, :with => :currency
-
-  normalize_attributes :summary, :with => :truncate, :length => 12
-
-  normalize_attributes :title do |value|
-    value.is_a?(String) ? value.titleize.strip : value
-  end
-
-end
 
 Spec::Runner.configure do |config|
   config.include AttributeNormalizer::RSpecMatcher, :type => :models
 end
-
