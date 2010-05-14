@@ -27,7 +27,9 @@ require 'attribute_normalizer/rspec_matcher'
 
 def include_attribute_normalizer(class_or_module)
   return if class_or_module.include?(AttributeNormalizer)
-  class_or_module.class_eval { include AttributeNormalizer }
+  class_or_module.class_eval do
+    extend AttributeNormalizer::ClassMethods
+  end
 end
 
 include_attribute_normalizer(ActiveModel::Base)     if defined?(ActiveModel::Base)

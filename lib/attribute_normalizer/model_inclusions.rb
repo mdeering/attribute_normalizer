@@ -4,6 +4,7 @@ module AttributeNormalizer
     base.extend ClassMethods
   end
 
+
   module ClassMethods
 
     def normalize_attributes(*attributes, &block)
