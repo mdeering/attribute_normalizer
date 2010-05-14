@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{attribute_normalizer}
-  s.version = "0.1.2"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Deering"]
-  s.date = %q{2010-01-13}
+  s.date = %q{2010-05-14}
   s.email = %q{mdeering@mdeering.com}
   s.extra_rdoc_files = [
     "README.textile"
@@ -23,27 +23,29 @@ Gem::Specification.new do |s|
      "lib/attribute_normalizer.rb",
      "rails/init.rb",
      "spec/attribute_normalizer_spec.rb",
+     "spec/book_spec.rb",
      "spec/test_helper.rb"
   ]
   s.homepage = %q{http://github.com/mdeering/attribute_normalizer}
   s.post_install_message = %q{
-      =============================
-      Attribute Normalizer News:
+-----------------------------------------------------------------------
+  Attribute Normalizer News:
 
-      I am looking for feedback on the roadmap for this gem.  Please visit
-      http://github.com/mdeering/attribute_normalizer/blob/master/ROADMAP.textile
-      and send your comments, suggestions, and pull requests.
+  There are lots of changes from the 0.1.2 release to the 0.2.0 release!
+  Change log is here http://github.com/mdeering/attribute_normalizer/blob/master/ROADMAP.textile
+  Docs have been updated here http://github.com/mdeering/attribute_normalizer
 
-      Cheers,
-      Michael Deering http://mdeering.com
-      =============================
+  Cheers,
+  Michael Deering http://mdeering.com
+-----------------------------------------------------------------------
     }
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Active Record attribute normalizer that excepts code blocks.}
+  s.rubygems_version = %q{1.3.6}
+  s.summary = %q{Attribute normalizer that excepts code blocks.}
   s.test_files = [
     "spec/attribute_normalizer_spec.rb",
+     "spec/book_spec.rb",
      "spec/test_helper.rb"
   ]
 
