@@ -1,79 +1,123 @@
 h1. Attribute Normalizer
 
-p. I like to keep my Active Record models as strict as possible but I also like the further layer of protection/restriction setting database columns to not allow NULL adds.  Normalizing to nil helps enforce this better by not letting '' slip through the cracks and I can still prevent those who insist on direct DB access from entering in shitty data as much as possible.
+p. A little normalization goes a long way in helping maintain data integrity.
 
-h2. Install as a Ruby gem
+h2. Recent Changes
 
-p. The "attribute_normalizer gem":http://gemcutter.org/gems/attribute_normalizer is hosted over at "Gemcutter":http://gemcutter.org
+* 0.2.0
+** Removed the normalization on reads.
+** Added out of the box support for CassandraObjects
+** Included RSpec matcher _normalizer_attribute_
+** Added the ability to define global normalizers
+** *Strings are no longer get 'strip' called on them before getting passed on to your defined normalization blocks*
 
-h3. Setup Gemcutter as a gem source if you have not already.
+* 0.1.2
+** Changed post-normalization attribute assignment to call super to avoid preventing plugins/gems/hooks to work on the same attribute.
 
-p. It’s fairly simple to set up Gemcutter. Before we start, however, it’s worth making sure that we’ve upgraded to the latest version of RubyGems, which can be done by running
+h2. Supported ORMs
 
-<pre><code>sudo gem update --system</code></pre>
+* Active Record
+* CassandraObjects
 
-p. From the command line. Once RubyGems has updated itself we can then install the Gemcutter gem with
+p. _I will gladly take pull requests to automatically load Attribute Normalizer into your ORM of choice if requested.  To test it out on your ORM just include the AttributeNormalizer module after requiring it._
 
-<pre><code>sudo gem install gemcutter</code></pre>
+<pre><code># your_initializer.rb
+require 'attribute_normalizer'
+YourORM::Base.send :include, AttributeNormalizer</code></pre>
 
-p. After Gemcutter has installed we’ll need to update our gem sources to include gemcutter.org. To do this we run *gem tumble*.
-
-<pre><code>$ gem tumble
-Thanks for using Gemcutter!
-Your gem sources are now:
-- http://gemcutter.org
-- http://gems.rubyforge.org/
-- http://gems.github.com
-</code></pre>
-
-h3. Install the Attribute Normalizer gem
+h2. Install
 
 <pre><code>sudo gem install attribute_normalizer</code></pre>
 
-h2. Install as a Ruby on Rails Plugin
+p. Then just required it.  Rails usages is as follows.
 
-The traditional way.
+<pre><code># config/environment.rb
+  gem.config 'attribute_normalizer'</code></pre>
+
+p. It also still works as a traditional Rails plugin.
 
   ./script/plugin install git://github.com/mdeering/attribute_normalizer.git
 
-or the old-school but still c00l way!
-
-  piston import git://github.com/mdeering/attribute_normalizer.git vendor/plugins/attribute_normalizer
-
-or for all you hip gitsters.
-
-  git submodule add git://github.com/mdeering/attribute_normalizer.git vendor/plugins/attribute_normalizer
-  git submodule init
-
 h2. Usage
 
-This is eager loaded into Active Record.  It is usable inside of other ruby classes outside of ActiveRecord by just including the module AttributeNormalizer.
+p. Lets create a quick test/spec for what we want to accomplish as far as normalization using the built in RSpec matcher.
 
-<pre><code>
-class Klass < ActiveRecord::Base
+<pre><code># spec/models/book_spec.rb
+describe Book do
+  it { should normalize_attribute(:author) }
+  it { should normalize_attribute(:price).from('$3,450.98').to(3450.98) }
+  it { should normalize_attribute(:summary).from('Here is my summary that is a little to long').to('Here is m...') }
+  it { should normalize_attribute(:title).from('pick up chicks with magic tricks').to('Pick Up Chicks With Magic Tricks')}
+end</code></pre>
 
-  # Can take an array of attributes if you want
-  normalize_attributes :first_name, :last_name
+p. And lets predefine some normalizers that we may use in other classes/models or that we don't want to clutter up our class/model's readability with.
 
-  normalize_attributes :home_phone_number, :office_phone_number_ do |value|
-    value.is_a?(String) ? value.gsub(/\W/, '').gsub(/^1/, '') : nil
+<pre><code># config/initializers/attribute_normalizer.rb
+AttributeNormalizer.configure do |config|
+
+  config.normalizers[:currency] = lambda do |value, options|
+    value.is_a?(String) ? value.gsub(/[^0-9\.]+/, '') : value
+  end
+
+  config.normalizers[:truncate] = lambda do |text, options|
+    if text.is_a?(String)
+      options.reverse_merge!(:length => 30, :omission => "...")
+      l = options[:length] - options[:omission].mb_chars.length
+      chars = text.mb_chars
+      (chars.length > options[:length] ? chars[0...l] + options[:omission] : text).to_s
+    else
+      text
+    end
   end
 
 end
-
-object = Klass.new
-# Blank normalizes to nil
-object.first_name = ''
-object.first_name # => nil
-
-# Whitespace is cleaned up
-object.last_name = "\tDeering\n"
-object.last_name # => 'Deering'
-
-# Your given block will be executed to normalize
-object.home_phone_number = '+1 (555) 123.4567'
-object.home_phone_number # => '5551234567'
 </code></pre>
+
+The _normalize_attributes_ method is eager loaded into your ORM.  _normalize_attribute_ is aliased to _normalized_attributes_ and both can take in a single attribute or an array of attributes.
+
+<pre><code>class Book < ActiveRecord::Base
+
+  # By default it will strip leading and trailing whitespace
+  # and set to nil if blank.
+  normalize_attributes :author, :publisher
+
+  # Using one of our predefined normalizers.
+  normalize_attribute  :price, :with => :currency
+
+  # Using one of our predefined normalizers with options
+  normalize_attribute :summary, :with => :truncate, :length => 12
+
+  # You can also define your normalization block inline.
+  normalize_attribute :title do |value|
+    value.is_a?(String) ? value.titleize.strip : value
+  end
+
+end</code></pre>
+
+p. All the specs will pass now.  Here is quick look at the behaviour from a console.
+
+<pre><code>summary = 'Here is my summary that is a little to long'
+title   = 'pick up chicks with magic tricks'
+book    = Book.create!(:author => '', :price => '$3,450.89', :summary => summary, :title => title)
+book.author  # => nil
+book.price   # => 3450.89
+book.summary # => 'Here is m...'
+book.title   # => 'Pick Up Chicks With Magic Tricks'
+</code></pre>
+
+h2. Test Helpers
+
+p. If you are running RSpec there is matcher available for use.  Usage can been seen above.  Include it as follows.
+
+<pre><code># spec/spec_helper.rb
+# ...
+
+Spec::Runner.configure do |config|
+  # ...
+  config.include AttributeNormalizer::RSpecMatcher, :type => :models
+end</code></pre>
+
+p. _I will gladly take a patch to add a macro to Test::Unit if someone submits it._
 
 h2. Credits
 
@@ -81,4 +125,4 @@ Original module code and concept was taken from "Dan Kubb":http://github.com/dku
 
 h2. Copyright
 
-Copyright (c) 2009 "Michael Deering(Edmonton Ruby on Rails)":http://mdeering.com See MIT-LICENSE for details.
+Copyright (c) 2009-2010 "Michael Deering(Edmonton Ruby on Rails)":http://mdeering.com See MIT-LICENSE for details.

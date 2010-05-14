@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
 
       Cheers,
       Michael Deering http://mdeering.com
-      =============================      
+      =============================
     }
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]

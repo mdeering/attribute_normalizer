@@ -1,10 +1,10 @@
 -----------------------------------------------------------------------
   Attribute Normalizer News:
-  
-  I am looking for feedback on the roadmap for this gem.  Please visit
-  http://github.com/mdeering/attribute_normalizer/blob/master/ROADMAP.textile
-  and send your comments, suggestions, and pull requests.
-  
+
+  There are lots of changes from the 0.1.2 release to the 0.2.0 release!
+  Change log is here http://github.com/mdeering/attribute_normalizer/blob/master/ROADMAP.textile
+  Docs have been updated here http://github.com/mdeering/attribute_normalizer
+
   Cheers,
   Michael Deering http://mdeering.com
 -----------------------------------------------------------------------

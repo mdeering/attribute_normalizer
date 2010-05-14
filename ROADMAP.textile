@@ -1,27 +1,12 @@
 h1. 0.2.0
 
-* Allow for specification of reusable normalization blocks.
-p. Specify a normalization block somewhere before your model load.
+* -Remove normalization on read in preference of presenters-
+* -RSpec matcher included-
+* -Preconfigured normalization blocks for reuse across classes/attributes-
 
-p. Note: _syntax and convention is just a thought right now, still in flux and not yet tested_
+h1. 0.1.2
 
-<pre><code>ActiveRecord::Base.normalization_block :phone_numbers do |value|
- value.gsub(/\W/, '').gsub(/^1/, '')
-end
-</code></pre>
-
-p. Then from any of your models this block can be reused.
-
-<pre><code>normalize_attributes :home_phone_number, :office_phone_number, :as => :phone_numbers</code></pre>
-
-p. _alternate sytax/convention_
-
-<pre><code>ActiveRecord::Base.normalization_block :phone_number_normalization do |value|
- value.gsub(/\W/, '').gsub(/^1/, '')
-end
-
-normalize_attributes :home_phone_number, :office_phone_number, :with => :phone_number_normalization
-</code></pre>
+* -Re-factored to use 'super' calls so that so that we don't break any other gems/plugins or the call chain in general-
 
 h1. 0.1.1
 
