@@ -25,5 +25,11 @@ require 'attribute_normalizer/model_inclusions'
 require 'attribute_normalizer/rspec_matcher'
 
 
-ActiveRecord::Base.class_eval    { include AttributeNormalizer } if defined?(ActiveRecord::Base)
-CassandraObject::Base.class_eval { include AttributeNormalizer } if defined?(CassandraObject::Base)
+def include_attribute_normalizer(class_or_module)
+  return if class_or_module.include?(AttributeNormalizer)
+  class_or_module.class_eval { include AttributeNormalizer }
+end
+
+include_attribute_normalizer(ActiveModel::Base)     if defined?(ActiveModel::Base)
+include_attribute_normalizer(ActiveRecord::Base)    if defined?(ActiveRecord::Base)
+include_attribute_normalizer(CassandraObject::Base) if defined?(CassandraObject::Base)
