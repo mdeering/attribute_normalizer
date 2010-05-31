@@ -4,15 +4,12 @@ module AttributeNormalizer
     base.extend ClassMethods
   end
 
-
   module ClassMethods
-
     def normalize_attributes(*attributes, &block)
       options = attributes.extract_options!
       with    = options.delete(:with)
 
       attributes.each do |attribute|
-
         define_method "normalize_#{attribute}" do |value|
           normalized = if block_given? && !value.blank?
             yield(value)
@@ -27,16 +24,8 @@ module AttributeNormalizer
           normalized.nil? || (normalized.is_a?(String) && normalized == '') ? nil : normalized
         end
         self.send :private, "normalize_#{attribute}"
-
-        define_method "#{attribute}=" do |value|
-          super(self.send(:"normalize_#{attribute}", value))
-        end
-
       end
-
     end
     alias :normalize_attribute :normalize_attributes
-
   end
-
 end
