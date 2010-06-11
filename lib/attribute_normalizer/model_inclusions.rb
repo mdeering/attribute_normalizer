@@ -24,6 +24,11 @@ module AttributeNormalizer
           normalized.nil? || (normalized.is_a?(String) && normalized == '') ? nil : normalized
         end
         self.send :private, "normalize_#{attribute}"
+
+        define_method "#{attribute}=" do |value|
+          super(self.send(:"normalize_#{attribute}", value))
+        end
+
       end
     end
     alias :normalize_attribute :normalize_attributes

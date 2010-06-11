@@ -31,12 +31,18 @@ h2. Install
 
 p. Then just required it.  Rails usages is as follows.
 
+h3. Rails 2
+
 <pre><code># config/environment.rb
-  gem.config 'attribute_normalizer'</code></pre>
+ config.gem 'attribute_normalizer'</code></pre>
+
+h3. Rails 3
+<pre><code># Gemfile
+gem 'attribute_normalizer'</code></pre>
 
 p. It also still works as a traditional Rails plugin.
 
-  ./script/plugin install git://github.com/mdeering/attribute_normalizer.git
+<pre><code>./script/plugin install git://github.com/mdeering/attribute_normalizer.git</code></pre>
 
 h2. Usage
 
