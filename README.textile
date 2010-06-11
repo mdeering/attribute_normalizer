@@ -115,12 +115,22 @@ h2. Test Helpers
 
 p. If you are running RSpec there is matcher available for use.  Usage can been seen above.  Include it as follows.
 
+h3. Rails 2
+
 <pre><code># spec/spec_helper.rb
 # ...
-
 Spec::Runner.configure do |config|
   # ...
   config.include AttributeNormalizer::RSpecMatcher, :type => :models
+end</code></pre>
+
+h3. Rails 3
+
+<pre><code># spec/spec_helper.rb
+# ...
+Spec::Runner.configure do |config|
+  # ...
+  config.include AttributeNormalizer::RSpecMatcher # Models group type is missing at this time rspec-rails 2.0.0.beta.11
 end</code></pre>
 
 p. _I will gladly take a patch to add a macro to Test::Unit if someone submits it._

@@ -32,5 +32,5 @@ require 'models/book'
 
 
 Spec::Runner.configure do |config|
-  config.include AttributeNormalizer::RSpecMatcher, :type => :models
+  config.include AttributeNormalizer::RSpecMatcher
 end
