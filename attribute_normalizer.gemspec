@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Deering"]
-  s.date = %q{2010-05-14}
+  s.date = %q{2010-06-15}
   s.email = %q{mdeering@mdeering.com}
   s.extra_rdoc_files = [
     "README.textile"
@@ -21,9 +21,16 @@ Gem::Specification.new do |s|
      "install.rb",
      "install.txt",
      "lib/attribute_normalizer.rb",
+     "lib/attribute_normalizer/model_inclusions.rb",
+     "lib/attribute_normalizer/normalizers/blank_normalizer.rb",
+     "lib/attribute_normalizer/normalizers/strip_normalizer.rb",
+     "lib/attribute_normalizer/rspec_matcher.rb",
      "rails/init.rb",
      "spec/attribute_normalizer_spec.rb",
      "spec/book_spec.rb",
+     "spec/connection_and_schema.rb",
+     "spec/models/author.rb",
+     "spec/models/book.rb",
      "spec/test_helper.rb"
   ]
   s.homepage = %q{http://github.com/mdeering/attribute_normalizer}
@@ -41,19 +48,22 @@ Gem::Specification.new do |s|
     }
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{Attribute normalizer that excepts code blocks.}
   s.test_files = [
-    "spec/attribute_normalizer_spec.rb",
-     "spec/book_spec.rb",
-     "spec/test_helper.rb"
+    "spec/test_helper.rb",
+     "spec/models/author.rb",
+     "spec/models/book.rb",
+     "spec/connection_and_schema.rb",
+     "spec/attribute_normalizer_spec.rb",
+     "spec/book_spec.rb"
   ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
     else
     end
   else
