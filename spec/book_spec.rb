@@ -4,9 +4,15 @@ describe Book do
 
   it { should normalize_attribute(:author).from(' Michael Deering ').to('Michael Deering') }
 
+  it { should normalize_attribute(:author)}
+
   it { should normalize_attribute(:price).from('$3,450.98').to(3450.98) }
 
-  it { should normalize_attribute(:summary).from('Here is my summary that is a little to long').to('Here is m...') }
+  it { should normalize_attribute(:price)}
+
+  it { should normalize_attribute(:summary).from(' Here is my summary that is a little to long').to('Here is m...') }
+
+  it { should normalize_attribute(:summary)}
 
   it { should normalize_attribute(:title).from('pick up chicks with magic tricks').to('Pick Up Chicks With Magic Tricks') }
 

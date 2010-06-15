@@ -7,22 +7,35 @@ module AttributeNormalizer
   module ClassMethods
     def normalize_attributes(*attributes, &block)
       options = attributes.extract_options!
-      with    = options.delete(:with)
-
+      normalizers    = [options.delete(:with)].flatten.compact
+      if normalizers.empty? && !block_given?
+        normalizers=[:strip,:blank] #the default normalizers
+      end
+      
       attributes.each do |attribute|
         define_method "normalize_#{attribute}" do |value|
-          normalized = if block_given? && !value.blank?
+          if block_given?
             yield(value)
-          elsif !with.nil? && !value.blank?
-            unless AttributeNormalizer.configuration.normalizers.has_key?(with)
-              raise AttributeNormalizer::MissingNormalizer.new("No normalizer was found for #{with}")
-            end
-            AttributeNormalizer.configuration.normalizers[with].call(value, options)
           else
-            value.is_a?(String) ? value.strip : value
+            normalized=value
+            normalizers.each do |normalizer_name|
+              unless normalizer_name.kind_of?(Symbol)
+                normalizer_name,options=normalizer_name.keys[0],normalizer_name[normalizer_name.keys[0]]
+              end
+
+              unless AttributeNormalizer.configuration.normalizers.has_key?(normalizer_name)
+                raise AttributeNormalizer::MissingNormalizer.new("No normalizer was found for #{normalizer_name}")
+              end
+              normalizer=AttributeNormalizer.configuration.normalizers[normalizer_name]
+
+              normalized= normalizer.respond_to?(:normalize) ? normalizer.normalize(normalized,options) :
+                normalizer.call(normalized, options)
+              #puts "#{normalizer_name} : ->'#{normalized}' (#{normalized.class})"
+            end
+            normalized
           end
-          normalized.nil? || (normalized.is_a?(String) && normalized == '') ? nil : normalized
         end
+        
         self.send :private, "normalize_#{attribute}"
 
         define_method "#{attribute}=" do |value|
