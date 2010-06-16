@@ -6,27 +6,28 @@ module AttributeNormalizer
 
   module ClassMethods
     def normalize_attributes(*attributes, &block)
-      options = attributes.extract_options!
+      options = attributes.last.is_a?(::Hash) ? attributes.pop : {}
+
       normalizers    = [options.delete(:with)].flatten.compact
       if normalizers.empty? && !block_given?
         normalizers=[:strip,:blank] #the default normalizers
       end
       
       attributes.each do |attribute|
-        define_method "normalize_#{attribute}" do |value|
-          if block_given?
+        if block_given?
+          define_method "normalize_#{attribute}" do |value|
             yield(value)
-          else
+          end
+        else
+          define_method "normalize_#{attribute}" do |value|
             normalized=value
             normalizers.each do |normalizer_name|
               unless normalizer_name.kind_of?(Symbol)
                 normalizer_name,options=normalizer_name.keys[0],normalizer_name[normalizer_name.keys[0]]
               end
 
-              unless AttributeNormalizer.configuration.normalizers.has_key?(normalizer_name)
-                raise AttributeNormalizer::MissingNormalizer.new("No normalizer was found for #{normalizer_name}")
-              end
               normalizer=AttributeNormalizer.configuration.normalizers[normalizer_name]
+              raise AttributeNormalizer::MissingNormalizer.new("No normalizer was found for #{normalizer_name}") unless normalizer
 
               normalized= normalizer.respond_to?(:normalize) ? normalizer.normalize(normalized,options) :
                 normalizer.call(normalized, options)
