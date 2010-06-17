@@ -16,6 +16,7 @@ h2. Recent Changes
 
 h2. Supported ORMs
 
+* _Active Model_
 * Active Record
 * CassandraObjects
 
