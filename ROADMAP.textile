@@ -1,3 +1,12 @@
+h1. 0.3.0
+* Default normalizers
+* Normalizer Chaining
+* Ability to change the default attribute normalization.
+
+h1. 0.2.1
+* -ActiveModel ORM added-
+* -Fix for :with option getting dropped when normalizing several attributes-
+
 h1. 0.2.0
 
 * -Remove normalization on read in preference of presenters-
