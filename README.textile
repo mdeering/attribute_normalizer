@@ -4,7 +4,7 @@ p. A little normalization goes a long way in helping maintain data integrity.
 
 h2. Recent Changes
 
-* 0.3.0.pre
+* 0.3.0
 ** Normalizer Chaining
 ** Built-in common normalizers
 ** Ability to change the default attribute normalization.
@@ -59,9 +59,15 @@ p. Lets create a quick test/spec for what we want to accomplish as far as normal
 describe Book do
   it { should normalize_attribute(:author) }
   it { should normalize_attribute(:price).from('$3,450.98').to(3450.98) }
-  it { should normalize_attribute(:summary).from('Here is my summary that is a little to long').to('Here is m...') }
-  it { should normalize_attribute(:title).from('pick up chicks with magic tricks').to('Pick Up Chicks With Magic Tricks')}
+  it { should normalize_attribute(:summary).from('   Here is my summary that is a little to long   ').to('Here is m...') }
+  it { should normalize_attribute(:title).from(' pick up chicks with magic tricks  ').to('Pick Up Chicks With Magic Tricks')}
 end</code></pre>
+
+p. The following normalizers are already included with the +0.3 version of the gem.
+
+* _:blank_ Will return _nil_ on empty strings
+* _:phone_ Will strip out all non-digit characters and return nil on empty strings
+* _:strip_ Will strip leading and trailing whitespace.
 
 p. And lets predefine some normalizers that we may use in other classes/models or that we don't want to clutter up our class/model's readability with.
 
@@ -83,6 +89,10 @@ AttributeNormalizer.configure do |config|
     end
   end
 
+  # The default normalizers if no :with option or block is given is to apply the :strip and :blank normalizers (in that order).
+  # You can change this if you would like as follows:
+  # config.default_normalizers = :strip, :blank
+
 end
 </code></pre>
 
@@ -97,8 +107,8 @@ The _normalize_attributes_ method is eager loaded into your ORM.  _normalize_att
   # Using one of our predefined normalizers.
   normalize_attribute  :price, :with => :currency
 
-  # Using one of our predefined normalizers with options
-  normalize_attribute :summary, :with => :truncate, :length => 12
+  # Using more then one of our predefined normalizers including one with options
+  normalize_attribute :summary, :with => [ :strip, { :truncate => { :length => 12 } } ]
 
   # You can also define your normalization block inline.
   normalize_attribute :title do |value|
