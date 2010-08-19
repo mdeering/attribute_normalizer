@@ -1,7 +1,8 @@
-source 'http://rubygems.org'
+source :rubygems
 
-gem 'activerecord'
-gem 'autotest'
-gem 'jeweler'
-gem 'rspec'
-gem 'sqlite3-ruby'
+group :development do
+  gem 'jeweler'
+  gem 'sqlite3-ruby'
+  gem 'rspec'
+  gem 'activerecord'
+end
