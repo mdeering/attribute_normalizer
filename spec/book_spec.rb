@@ -7,7 +7,7 @@ describe Book do
   it { should normalize_attribute(:us_price).from('$3.50').to(3.50) }
   it { should normalize_attribute(:cnd_price).from('$3,450.98').to(3450.98) }
 
-  it { should normalize_attribute(:summary).from('Here is my summary that is a little to long').to('Here is m...') }
+  it { should normalize_attribute(:summary).from('    Here is my summary that is a little to long  ').to('Here is m...') }
 
   it { should normalize_attribute(:title).from('pick up chicks with magic tricks').to('Pick Up Chicks With Magic Tricks') }
 
@@ -42,6 +42,11 @@ describe Book do
       @book.title.should  == 'Bad Title'
       @book.author.should == 'Bad Author'
     end
+  end
+
+  context 'with the default normalizer changed' do
+    @book = Book.new :author => 'testing the default normalizer'
+    @book.author.should == 'testing the default normalizer'
   end
 
 end

@@ -1,3 +1,7 @@
+require 'attribute_normalizer/normalizers/blank_normalizer'
+require 'attribute_normalizer/normalizers/phone_normalizer'
+require 'attribute_normalizer/normalizers/strip_normalizer'
+
 module AttributeNormalizer
 
   class MissingNormalizer < ArgumentError; end
@@ -11,11 +15,23 @@ module AttributeNormalizer
     yield(configuration)
   end
 
+
   class Configuration
-    attr_accessor :normalizers
+    attr_accessor :default_normalizers, :normalizers
+
+    def default_normalizers=(normalizers)
+      @default_normalizers = normalizers.is_a?(Array) ? normalizers : [ normalizers ]
+    end
+
     def initialize
       @normalizers = {}
+      @normalizers[ :blank ]   = AttributeNormalizer::Normalizers::BlankNormalizer
+      @normalizers[ :phone ]   = AttributeNormalizer::Normalizers::PhoneNormalizer
+      @normalizers[ :strip ]   = AttributeNormalizer::Normalizers::StripNormalizer
+      @default_normalizers = [ :strip, :blank ]
     end
+
+
   end
 
 end
@@ -23,7 +39,6 @@ end
 
 require 'attribute_normalizer/model_inclusions'
 require 'attribute_normalizer/rspec_matcher'
-
 
 def include_attribute_normalizer(class_or_module)
   return if class_or_module.include?(AttributeNormalizer)

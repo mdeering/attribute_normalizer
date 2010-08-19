@@ -4,6 +4,11 @@ p. A little normalization goes a long way in helping maintain data integrity.
 
 h2. Recent Changes
 
+* 0.3.0.pre
+** Normalizer Chaining
+** Built-in common normalizers
+** Ability to change the default attribute normalization.
+
 * 0.2.1
 ** ActiveModel Support Built-in
 ** Fix for :with option getting dropped when normalizing several attributes

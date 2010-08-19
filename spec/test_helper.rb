@@ -3,6 +3,7 @@ require 'spec'
 require 'active_record'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
+
 require 'attribute_normalizer'
 
 
@@ -23,11 +24,18 @@ AttributeNormalizer.configure do |config|
     end
   end
 
+  config.normalizers[:special_normalizer] = lambda do |value, options|
+    (value.is_a?(String) && value.match(/testing the default normalizer/)) ? 'testing the default normalizer' : value
+  end
+
+  config.default_normalizers = :strip, :special_normalizer, :blank
+
 end
 
 
 require 'connection_and_schema'
 require 'models/book'
+require 'models/author'
 
 
 Spec::Runner.configure do |config|
