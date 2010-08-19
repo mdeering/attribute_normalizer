@@ -9,9 +9,12 @@ module AttributeNormalizer
   class << self
     attr_accessor :configuration
   end
+  
+  def self.configuration
+    @configuration ||= Configuration.new 
+  end
 
   def self.configure
-    self.configuration ||= Configuration.new
     yield(configuration)
   end
 
