@@ -4,15 +4,16 @@ p. A little normalization goes a long way in helping maintain data integrity.
 
 h2. Recent Changes
 
+* 0.2.1
+** ActiveModel Support Built-in
+** Fix for :with option getting dropped when normalizing several attributes
+
 * 0.2.0
 ** Removed the normalization on reads.
 ** Added out of the box support for CassandraObjects
 ** Included RSpec matcher _normalizer_attribute_
 ** Added the ability to define global normalizers
 ** *Strings are no longer get 'strip' called on them before getting passed on to your defined normalization blocks*
-
-* 0.1.2
-** Changed post-normalization attribute assignment to call super to avoid preventing plugins/gems/hooks to work on the same attribute.
 
 h2. Supported ORMs
 
