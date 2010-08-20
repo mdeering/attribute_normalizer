@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{attribute_normalizer}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Deering"]
-  s.date = %q{2010-08-18}
+  s.date = %q{2010-08-19}
   s.email = %q{mdeering@mdeering.com}
   s.extra_rdoc_files = [
     "README.textile"
@@ -40,9 +40,11 @@ Gem::Specification.new do |s|
 -----------------------------------------------------------------------
   Attribute Normalizer News:
 
-  There are lots of changes from the 0.1.2 release to the 0.2.0 release!
-  Change log is here http://github.com/mdeering/attribute_normalizer/blob/master/ROADMAP.textile
-  Docs have been updated here http://github.com/mdeering/attribute_normalizer
+  New with the 0.3.X release is the ability to change the default
+  normalization and also the ability to chain normalizers together.
+
+  After the flow of patches slows down on this release I will likely
+  freeze the feature set and API for a 1.0 release of the gem.
 
   Cheers,
   Michael Deering http://mdeering.com
