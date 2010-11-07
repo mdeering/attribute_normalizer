@@ -21,10 +21,6 @@ ActiveRecord::Schema.define do
     t.string  :title
   end
 
-  create_table :country, :force => true do |t|
-    t.string  :name
-  end
-
   create_table :journals, :force => true do |t|
     t.string  :name
   end
