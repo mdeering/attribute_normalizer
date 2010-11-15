@@ -29,6 +29,8 @@ AttributeNormalizer.configure do |config|
   end
 
   config.default_normalizers = :strip, :special_normalizer, :blank
+  config.default_attributes = :name, :title
+  config.add_default_attribute :authors, :with => [:strip, :blank]
 
 end
 
@@ -36,6 +38,8 @@ end
 require 'connection_and_schema'
 require 'models/book'
 require 'models/author'
+require 'models/journal'
+require 'models/article'
 
 
 Spec::Runner.configure do |config|

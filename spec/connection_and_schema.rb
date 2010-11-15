@@ -20,4 +20,13 @@ ActiveRecord::Schema.define do
     t.string  :summary
     t.string  :title
   end
+
+  create_table :journals, :force => true do |t|
+    t.string  :name
+  end
+
+  create_table :articles, :force => true do |t|
+    t.string  :title
+    t.string  :authors
+  end
 end
