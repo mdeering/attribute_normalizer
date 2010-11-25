@@ -17,6 +17,7 @@ describe Author do
 
     # :blank normalizer
     it { should normalize_attribute(:last_name).from('').to(nil) }
+    it { should normalize_attribute(:last_name).from('  ').to(nil) }
     it { should normalize_attribute(:last_name).from(' this ').to(' this ') }
 
     # :phone normalizer
