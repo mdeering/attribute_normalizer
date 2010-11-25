@@ -7,6 +7,7 @@ ActiveRecord::Base.establish_connection({
 ActiveRecord::Schema.define do
   create_table :authors, :force => true do |t|
     t.string :name
+    t.string :nickname
     t.string :first_name
     t.string :last_name
     t.string :phone_number

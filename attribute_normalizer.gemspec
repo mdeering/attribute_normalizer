@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Deering"]
-  s.date = %q{2010-11-15}
+  s.date = %q{2010-11-25}
   s.email = %q{mdeering@mdeering.com}
   s.extra_rdoc_files = [
     "README.textile"
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
      "lib/attribute_normalizer/model_inclusions.rb",
      "lib/attribute_normalizer/normalizers/blank_normalizer.rb",
      "lib/attribute_normalizer/normalizers/phone_normalizer.rb",
+     "lib/attribute_normalizer/normalizers/squish_normalizer.rb",
      "lib/attribute_normalizer/normalizers/strip_normalizer.rb",
      "lib/attribute_normalizer/rspec_matcher.rb",
      "rails/init.rb",

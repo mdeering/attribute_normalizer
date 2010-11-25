@@ -1,6 +1,7 @@
 require 'attribute_normalizer/normalizers/blank_normalizer'
 require 'attribute_normalizer/normalizers/phone_normalizer'
 require 'attribute_normalizer/normalizers/strip_normalizer'
+require 'attribute_normalizer/normalizers/squish_normalizer'
 
 module AttributeNormalizer
 
@@ -41,6 +42,7 @@ module AttributeNormalizer
       @normalizers[ :blank ]   = AttributeNormalizer::Normalizers::BlankNormalizer
       @normalizers[ :phone ]   = AttributeNormalizer::Normalizers::PhoneNormalizer
       @normalizers[ :strip ]   = AttributeNormalizer::Normalizers::StripNormalizer
+      @normalizers[ :squish ]  = AttributeNormalizer::Normalizers::SquishNormalizer
       @default_normalizers = [ :strip, :blank ]
       @default_attributes = {}
     end

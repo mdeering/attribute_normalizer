@@ -12,6 +12,9 @@ describe Author do
     it { should normalize_attribute(:first_name).from('  this  ').to('this') }
     it { should normalize_attribute(:first_name).from('    ').to('') }
 
+    # :squish normalizer
+    it { should normalize_attribute(:nickname).from(' this    nickname  ').to('this nickname') }
+
     # :blank normalizer
     it { should normalize_attribute(:last_name).from('').to(nil) }
     it { should normalize_attribute(:last_name).from(' this ').to(' this ') }

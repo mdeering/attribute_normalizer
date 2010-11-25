@@ -68,6 +68,7 @@ p. The following normalizers are already included with the +0.3 version of the g
 * _:blank_ Will return _nil_ on empty strings
 * _:phone_ Will strip out all non-digit characters and return nil on empty strings
 * _:strip_ Will strip leading and trailing whitespace.
+* _:squish_ Will strip leading and trailing whitespace and convert any consecutive spaces to one space each
 
 p. And lets predefine some normalizers that we may use in other classes/models or that we don't want to clutter up our class/model's readability with.
 
