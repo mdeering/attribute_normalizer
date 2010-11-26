@@ -145,16 +145,16 @@ h3. Rails 2
 # ...
 Spec::Runner.configure do |config|
   # ...
-  config.include AttributeNormalizer::RSpecMatcher, :type => :models
+  config.include AttributeNormalizer::RSpecMatcher, :type => :model
 end</code></pre>
 
 h3. Rails 3
 
 <pre><code># spec/spec_helper.rb
 # ...
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   # ...
-  config.include AttributeNormalizer::RSpecMatcher # Models group type is missing at this time rspec-rails 2.0.0.beta.11
+  config.include AttributeNormalizer::RSpecMatcher, :type => :model
 end</code></pre>
 
 p. _I will gladly take a patch to add a macro to Test::Unit if someone submits it._
