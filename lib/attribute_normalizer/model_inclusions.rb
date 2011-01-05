@@ -55,7 +55,7 @@ module AttributeNormalizer
 
     def inherited(subclass)
       super
-      subclass.normalize_default_attributes
+      subclass.normalize_default_attributes if subclass.table_exists?
     end
   end
 end
