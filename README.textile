@@ -148,7 +148,7 @@ end</code></pre>
 h3. Rails 3
 
 <pre><code># spec/spec_helper.rb
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.include AttributeNormalizer::RSpecMatcher, :type => :model
 end</code></pre>
 
