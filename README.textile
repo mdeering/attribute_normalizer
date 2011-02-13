@@ -41,7 +41,7 @@ p. Then just required it.  Rails usages is as follows.
 h3. Rails 2
 
 <pre><code># config/environment.rb
- config.gem 'attribute_normalizer'</code></pre>
+config.gem 'attribute_normalizer'</code></pre>
 
 h3. Rails 3
 <pre><code># Gemfile
@@ -60,7 +60,7 @@ describe Book do
   it { should normalize_attribute(:author) }
   it { should normalize_attribute(:price).from('$3,450.98').to(3450.98) }
   it { should normalize_attribute(:summary).from('   Here is my summary that is a little to long   ').to('Here is m...') }
-  it { should normalize_attribute(:title).from(' pick up chicks with magic tricks  ').to('Pick Up Chicks With Magic Tricks')}
+  it { should normalize_attribute(:title).from(' pick up chicks with magic tricks  ').to('Pick Up Chicks With Magic Tricks') }
 end</code></pre>
 
 p. The following normalizers are already included with the +0.3 version of the gem.
@@ -89,16 +89,16 @@ AttributeNormalizer.configure do |config|
     end
   end
 
-  # The default normalizers if no :with option or block is given is to apply the :strip and :blank normalizers (in that order).
+  # The default normalizers if no normalizers or block is given is to apply the :strip and :blank normalizers (in that order).
   # You can change this if you would like as follows:
-  # config.default_normalizers = :strip, :blank
+  # config.default_normalizers = { :strip => true, :blank => true }
 
   # You can enable the attribute normalizers automatically if the specified attributes exist in your column_names. It will use 
   # the default normalizers for each attribute (e.g. config.default_normalizers)
   # config.default_attributes = :name, :title
 
   # Also, You can add an specific attribute to default_attributes using one or more normalizers:
-  # config.add_default_attribute :name, :with => :truncate
+  # config.add_default_attribute :name, :truncate => true
 end
 </code></pre>
 
@@ -111,10 +111,10 @@ The _normalize_attributes_ method is eager loaded into your ORM.  _normalize_att
   normalize_attributes :author, :publisher
 
   # Using one of our predefined normalizers.
-  normalize_attribute  :price, :with => :currency
+  normalize_attribute  :price, :currency => true
 
   # Using more then one of our predefined normalizers including one with options
-  normalize_attribute :summary, :with => [ :strip, { :truncate => { :length => 12 } } ]
+  normalize_attribute :summary, :strip => true, :truncate => { :length => 12 }
 
   # You can also define your normalization block inline.
   normalize_attribute :title do |value|
@@ -141,19 +141,15 @@ p. If you are running RSpec there is matcher available for use.  Usage can been 
 h3. Rails 2
 
 <pre><code># spec/spec_helper.rb
-# ...
 Spec::Runner.configure do |config|
-  # ...
   config.include AttributeNormalizer::RSpecMatcher, :type => :models
 end</code></pre>
 
 h3. Rails 3
 
 <pre><code># spec/spec_helper.rb
-# ...
 Spec::Runner.configure do |config|
-  # ...
-  config.include AttributeNormalizer::RSpecMatcher # Models group type is missing at this time rspec-rails 2.0.0.beta.11
+  config.include AttributeNormalizer::RSpecMatcher, :type => :model
 end</code></pre>
 
 p. _I will gladly take a patch to add a macro to Test::Unit if someone submits it._
