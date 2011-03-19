@@ -30,7 +30,7 @@ AttributeNormalizer.configure do |config|
 
   config.default_normalizers = :strip, :special_normalizer, :blank
   config.default_attributes = :name, :title
-  config.add_default_attribute :authors, :with => [:strip, :blank]
+  config.add_default_attribute :authors, :strip => true, :blank => true
 
 end
 
