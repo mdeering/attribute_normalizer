@@ -4,6 +4,10 @@ p. A little normalization goes a long way in helping maintain data integrity.
 
 h2. Recent Changes
 
+* 1.0.0.pre
+* DSL Changes
+* Default attributes to normalize
+
 * 0.3.0
 ** Normalizer Chaining
 ** Built-in common normalizers
