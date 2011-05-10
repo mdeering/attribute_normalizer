@@ -1,10 +1,10 @@
-require File.dirname(__FILE__) + '/test_helper'
+require File.dirname(File.expand_path(__FILE__)) + '/test_helper'
 
 describe Article do
   it { should normalize_attribute(:title).from(' Social Life at the Edge of Chaos    ').to('Social Life at the Edge of Chaos') }
   it { should normalize_attribute(:authors).from(' Octavio Miramontes and Pedro Miramontes ').to('Octavio Miramontes and Pedro Miramontes') }
 
-  context 'normalization should not interfear with other hooks and aliases on the attribute assignment' do
+  context 'normalization should not interfere with other hooks and aliases on the attribute assignment' do
     before do
       @article = Article.create!(:title => 'Original Title')
     end
