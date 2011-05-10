@@ -40,6 +40,7 @@ require 'models/book'
 require 'models/author'
 require 'models/journal'
 require 'models/article'
+require 'models/magazine'
 
 
 Spec::Runner.configure do |config|
