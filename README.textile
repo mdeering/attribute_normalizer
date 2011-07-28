@@ -5,7 +5,7 @@ p. A little normalization goes a long way in helping maintain data integrity.
 h2. Recent Changes
 
 * 1.0.0.pre
-* DSL Changes
+* -DSL Changes-
 * Default attributes to normalize
 
 * 0.3.0
@@ -94,16 +94,16 @@ AttributeNormalizer.configure do |config|
     end
   end
 
-  # The default normalizers if no normalizers or block is given is to apply the :strip and :blank normalizers (in that order).
+  # The default normalizers if no :with option or block is given is to apply the :strip and :blank normalizers (in that order).
   # You can change this if you would like as follows:
-  # config.default_normalizers = { :strip => true, :blank => true }
+  # config.default_normalizers = :strip, :blank
 
   # You can enable the attribute normalizers automatically if the specified attributes exist in your column_names. It will use
   # the default normalizers for each attribute (e.g. config.default_normalizers)
   # config.default_attributes = :name, :title
 
   # Also, You can add an specific attribute to default_attributes using one or more normalizers:
-  # config.add_default_attribute :name, :truncate => true
+  # config.add_default_attribute :name, :with => :truncate
 end
 </code></pre>
 
@@ -116,10 +116,10 @@ The _normalize_attributes_ method is eager loaded into your ORM.  _normalize_att
   normalize_attributes :author, :publisher
 
   # Using one of our predefined normalizers.
-  normalize_attribute  :price, :currency => true
+  normalize_attribute  :price, :with => :currency
 
   # Using more then one of our predefined normalizers including one with options
-  normalize_attribute :summary, :strip => true, :truncate => { :length => 12 }
+  normalize_attribute :summary, :with => [ :strip, { :truncate => { :length => 12 } } ]
 
   # You can also define your normalization block inline.
   normalize_attribute :title do |value|

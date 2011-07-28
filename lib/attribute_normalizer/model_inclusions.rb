@@ -6,8 +6,10 @@ module AttributeNormalizer
 
   module ClassMethods
     def normalize_attributes(*attributes, &block)
-      normalizers = attributes.last.is_a?(::Hash) ? attributes.pop : {}
-      
+      options = attributes.last.is_a?(::Hash) ? attributes.pop : {}
+
+      normalizers    = [ options.delete(:with) ].flatten.compact
+
       if normalizers.empty? && !block_given?
         normalizers = AttributeNormalizer.configuration.default_normalizers # the default normalizers
       end
@@ -20,16 +22,14 @@ module AttributeNormalizer
         else
           define_method "normalize_#{attribute}" do |value|
             normalized = value
-            
-            normalizers.each do |key, options|
-              normalizer = AttributeNormalizer.configuration.normalizers[key]
-              raise AttributeNormalizer::MissingNormalizer.new("No normalizer was found for #{key}") unless normalizer
 
-              normalized = if normalizer.respond_to?(:normalize)
-                normalizer.normalize(normalized, TrueClass === options ? {} : options)
-              else
-                normalizer.call(normalized, TrueClass === options ? {} : options)
+            normalizers.each do |normalizer_name|
+              unless normalizer_name.kind_of?(Symbol)
+                normalizer_name, options = normalizer_name.keys[0], normalizer_name[ normalizer_name.keys[0] ]
               end
+              normalizer = AttributeNormalizer.configuration.normalizers[normalizer_name]
+              raise AttributeNormalizer::MissingNormalizer.new("No normalizer was found for #{normalizer_name}") unless normalizer
+              normalized = normalizer.respond_to?(:normalize) ? normalizer.normalize( normalized , options) : normalizer.call(normalized, options)
             end
             normalized
           end
@@ -46,7 +46,7 @@ module AttributeNormalizer
     alias :normalize_attribute :normalize_attributes
 
     def normalize_default_attributes
-      AttributeNormalizer.configuration.default_attributes.each do |attribute_name, options| 
+      AttributeNormalizer.configuration.default_attributes.each do |attribute_name, options|
         normalize_attribute(attribute_name, options) if self.column_names.include?(attribute_name)
       end
     end

@@ -24,17 +24,17 @@ module AttributeNormalizer
     attr_accessor :default_normalizers, :normalizers, :default_attributes
 
     def default_normalizers=(normalizers)
-      @default_normalizers = normalizers
+      @default_normalizers = normalizers.is_a?(Array) ? normalizers : [ normalizers ]
     end
 
     def default_attributes=(attributes)
       [attributes].flatten.each do |attribute|
-        add_default_attribute(attribute, default_normalizers)
+        add_default_attribute(attribute, :with => default_normalizers)
       end
     end
 
-    def add_default_attribute(attribute, normalizers)
-      @default_attributes[attribute.to_s] = normalizers
+    def add_default_attribute(attribute, options)
+      @default_attributes[attribute.to_s] = { :with => default_normalizers }.merge(options)
     end
 
     def initialize
