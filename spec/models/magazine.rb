@@ -9,13 +9,15 @@ class Magazine
                        :title
 
   normalize_attributes :name
-  normalize_attribute  :us_price, :cnd_price, :currency => true
+  normalize_attribute  :us_price, :cnd_price, :with => :currency
 
   normalize_attributes :summary,
-                       :strip => true,
-                       :truncate => { :length => 12 },
-                       :blank => true
- 
+                       :with => [
+                         :strip,
+                         { :truncate => { :length => 12 } },
+                         :blank
+                        ]
+
   normalize_attributes :title do |value|
     value.is_a?(String) ? value.titleize.strip : value
   end
