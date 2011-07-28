@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'spec'
 require 'active_record'
+require 'mongoid'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 
@@ -40,6 +41,7 @@ require 'models/book'
 require 'models/author'
 require 'models/journal'
 require 'models/article'
+require 'models/magazine'
 
 
 Spec::Runner.configure do |config|

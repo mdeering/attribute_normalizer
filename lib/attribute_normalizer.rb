@@ -63,6 +63,16 @@ def include_attribute_normalizer(class_or_module)
   end
 end
 
+
+
 include_attribute_normalizer(ActiveModel::Base)     if defined?(ActiveModel::Base)
 include_attribute_normalizer(ActiveRecord::Base)    if defined?(ActiveRecord::Base)
 include_attribute_normalizer(CassandraObject::Base) if defined?(CassandraObject::Base)
+
+if defined?(Mongoid::Document)
+  Mongoid::Document.class_eval do
+    included do
+      include AttributeNormalizer
+    end
+  end
+end

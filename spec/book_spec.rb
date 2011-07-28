@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require File.dirname(File.expand_path(__FILE__)) + '/test_helper'
 
 describe Book do
 
@@ -11,7 +11,7 @@ describe Book do
 
   it { should normalize_attribute(:title).from('pick up chicks with magic tricks').to('Pick Up Chicks With Magic Tricks') }
 
-  context 'normalization should not interfear with other hooks and aliases on the attribute assignment' do
+  context 'normalization should not interfere with other hooks and aliases on the attribute assignment' do
     before do
       @book = Book.create!(:title => 'Original Title')
     end
