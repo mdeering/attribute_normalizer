@@ -49,14 +49,14 @@ module AttributeNormalizer
 
         if method_defined?(:"#{attribute}=")
           alias_method "old_#{attribute}=", "#{attribute}="
-        end
 
-        define_method "#{attribute}=" do |value|
-          begin
-            super(self.send(:"normalize_#{attribute}", value))
-          rescue NoMethodError
+          define_method "#{attribute}=" do |value|
             normalized_value = self.send(:"normalize_#{attribute}", value)
             self.send("old_#{attribute}=", normalized_value)
+          end
+        else
+          define_method "#{attribute}=" do |value|
+            super(self.send(:"normalize_#{attribute}", value))
           end
         end
 
