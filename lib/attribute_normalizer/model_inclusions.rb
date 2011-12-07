@@ -62,7 +62,7 @@ module AttributeNormalizer
 
     def inherited(subclass)
       super
-      if subclass.respond_to?(:table_exists?) && subclass.table_exists?
+      if subclass.respond_to?(:table_exists?) && (subclass.table_exists? rescue false)
         subclass.normalize_default_attributes
       end
     end
