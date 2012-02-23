@@ -8,22 +8,31 @@ module AttributeNormalizer
     def normalize_attributes(*attributes, &block)
       options = attributes.last.is_a?(::Hash) ? attributes.pop : {}
 
-      normalizers    = [ options.delete(:with) ].flatten.compact
+      normalizers      = [ options.delete(:with) ].flatten.compact
+      normalizers      = [ options.delete(:before) ].flatten.compact if block_given? && normalizers.empty?
+      post_normalizers = [ options.delete(:after) ].flatten.compact if block_given?
 
       if normalizers.empty? && !block_given?
         normalizers = AttributeNormalizer.configuration.default_normalizers # the default normalizers
       end
 
       attributes.each do |attribute|
-        if block_given?
-          define_method "normalize_#{attribute}" do |value|
-            yield(value)
-          end
-        else
-          define_method "normalize_#{attribute}" do |value|
-            normalized = value
+        define_method "normalize_#{attribute}" do |value|
+          normalized = value
 
-            normalizers.each do |normalizer_name|
+          normalizers.each do |normalizer_name|
+            unless normalizer_name.kind_of?(Symbol)
+              normalizer_name, options = normalizer_name.keys[0], normalizer_name[ normalizer_name.keys[0] ]
+            end
+            normalizer = AttributeNormalizer.configuration.normalizers[normalizer_name]
+            raise AttributeNormalizer::MissingNormalizer.new("No normalizer was found for #{normalizer_name}") unless normalizer
+            normalized = normalizer.respond_to?(:normalize) ? normalizer.normalize( normalized , options) : normalizer.call(normalized, options)
+          end
+
+          normalized = block_given? ? yield(normalized) : normalized
+
+          if block_given?
+            post_normalizers.each do |normalizer_name|
               unless normalizer_name.kind_of?(Symbol)
                 normalizer_name, options = normalizer_name.keys[0], normalizer_name[ normalizer_name.keys[0] ]
               end
@@ -31,8 +40,9 @@ module AttributeNormalizer
               raise AttributeNormalizer::MissingNormalizer.new("No normalizer was found for #{normalizer_name}") unless normalizer
               normalized = normalizer.respond_to?(:normalize) ? normalizer.normalize( normalized , options) : normalizer.call(normalized, options)
             end
-            normalized
           end
+
+          normalized
         end
 
         self.send :private, "normalize_#{attribute}"

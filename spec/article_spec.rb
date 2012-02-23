@@ -3,6 +3,10 @@ require File.dirname(File.expand_path(__FILE__)) + '/test_helper'
 describe Article do
   it { should normalize_attribute(:title).from(' Social Life at the Edge of Chaos    ').to('Social Life at the Edge of Chaos') }
   it { should normalize_attribute(:authors).from(' Octavio Miramontes and Pedro Miramontes ').to('Octavio Miramontes and Pedro Miramontes') }
+  it { should normalize_attribute(:slug) }
+  it { should normalize_attribute(:slug).from(' Social Life at the Edge of Chaos    ').to('social-life-at-the-edge-of-chaos') }
+  it { should normalize_attribute(:limited_slug) }
+  it { should normalize_attribute(:limited_slug).from(' Social Life at the Edge of Chaos    ').to('social-life') }
 
   context 'normalization should not interfere with other hooks and aliases on the attribute assignment' do
     before do

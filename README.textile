@@ -2,12 +2,14 @@ h1. Attribute Normalizer
 
 p. A little normalization goes a long way in helping maintain data integrity.
 
-h2. Recent Changes
+h2. Change History
+* 1.1.0
+** Allow the use of default normalizers before and after the evaluation of a given block
 
-* 1.0.0.pre
-* -DSL Changes-
-* Default attributes to normalize
-* mongid support
+* 1.0.0
+** -DSL Changes-
+** Default attributes to normalize
+** mongid support
 
 * 0.3.0
 ** Normalizer Chaining
@@ -66,6 +68,8 @@ describe Book do
   it { should normalize_attribute(:price).from('$3,450.98').to(3450.98) }
   it { should normalize_attribute(:summary).from('   Here is my summary that is a little to long   ').to('Here is m...') }
   it { should normalize_attribute(:title).from(' pick up chicks with magic tricks  ').to('Pick Up Chicks With Magic Tricks') }
+  it { should normalize_attribute(:slug).from(' Social Life at the Edge of Chaos    ').to('social-life-at-the-edge-of-chaos') }
+  it { should normalize_attribute(:limited_slug).from(' Social Life at the Edge of Chaos    ').to('social-life') }
 end</code></pre>
 
 p. The following normalizers are already included with the +0.3 version of the gem.
@@ -127,17 +131,33 @@ The _normalize_attributes_ method is eager loaded into your ORM.  _normalize_att
     value.is_a?(String) ? value.titleize.strip : value
   end
 
+  # Or use a combination of normalizers plus a inline block.
+  # the normalizers in the :with option will each be evalulated
+  # in order and the result will be given to the block.
+  # You could also use option :before in place of :with
+  normalize_attribute :slug, :with => [ :strip, :blank ] do |value|
+    value.present? && value.is_a?(String) ? value.downcase.gsub(/\s+/, '-') : value
+  end
+
+  # Use buildin normalizers before and after the evaluation of your inline
+  # block
+  normalize_attribute :limited_slug, :before => [ :strip, :blank ], :after => [ { :truncate => { :length => 11, :omission => '' } } ] do |value|
+    value.present? && value.is_a?(String) ? value.downcase.gsub(/\s+/, '-') : value
+  end
+
 end</code></pre>
 
 p. All the specs will pass now.  Here is quick look at the behaviour from a console.
 
 <pre><code>summary = 'Here is my summary that is a little to long'
 title   = 'pick up chicks with magic tricks'
-book    = Book.create!(:author => '', :price => '$3,450.89', :summary => summary, :title => title)
-book.author  # => nil
-book.price   # => 3450.89
-book.summary # => 'Here is m...'
-book.title   # => 'Pick Up Chicks With Magic Tricks'
+book    = Book.create!(:author => '', :price => '$3,450.89', :summary => summary, :title => title, :slug => title, :limited_slug => title)
+book.author       # => nil
+book.price        # => 3450.89
+book.summary      # => 'Here is m...'
+book.title        # => 'Pick Up Chicks With Magic Tricks'
+book.slug         # => 'pick-up-chicks-with-magic-tricks'
+book.limited_slug # => 'pick-up-chi'
 </code></pre>
 
 h2. Test Helpers

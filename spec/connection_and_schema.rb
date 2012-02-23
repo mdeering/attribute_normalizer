@@ -29,5 +29,7 @@ ActiveRecord::Schema.define do
   create_table :articles, :force => true do |t|
     t.string  :title
     t.string  :authors
+    t.string  :slug
+    t.string  :limited_slug
   end
 end
