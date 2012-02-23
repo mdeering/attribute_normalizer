@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'spec'
+require 'rspec'
 require 'active_record'
 require 'mongoid'
 
@@ -44,6 +44,6 @@ require 'models/article'
 require 'models/magazine'
 
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.include AttributeNormalizer::RSpecMatcher
 end
