@@ -1,5 +1,5 @@
 require 'rake'
-require 'rdoc/task'
+# require 'rdoc/task'
 require 'rspec/core/rake_task'
 require 'bundler/gem_tasks'
 
