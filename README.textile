@@ -1,5 +1,7 @@
 h1. Attribute Normalizer
 
+!https://secure.travis-ci.org/mdeering/attribute_normalizer.png?branch=master(Build Status)!:http://travis-ci.org/mdeering/attribute_normalizer
+
 p. A little normalization goes a long way in helping maintain data integrity.
 
 h2. Change History
