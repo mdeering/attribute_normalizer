@@ -2,7 +2,6 @@ require File.dirname(File.expand_path(__FILE__)) + '/test_helper'
 
 describe Article do
   it { should normalize_attribute(:title).from(' Social Life at the Edge of Chaos    ').to('Social Life at the Edge of Chaos') }
-  it { should normalize_attribute(:authors).from(' Octavio Miramontes and Pedro Miramontes ').to('Octavio Miramontes and Pedro Miramontes') }
   it { should normalize_attribute(:slug) }
   it { should normalize_attribute(:slug).from(' Social Life at the Edge of Chaos    ').to('social-life-at-the-edge-of-chaos') }
   it { should normalize_attribute(:limited_slug) }
@@ -32,18 +31,13 @@ describe Article do
 
   context 'normalization should work with multiple attributes at the same time' do
     before do
-      @article = Article.new(:title => '  Bad Title   ', :authors => '   Bad Authors   ')
+      @article = Article.new(:slug => '  Bad Slug   ', :limited_slug => '   Bad Limited Slug   ')
     end
 
     it "should apply normalizations to both attributes" do
-      @article.title.should  == 'Bad Title'
-      @article.authors.should == 'Bad Authors'
+      @article.slug.should == 'bad-slug'
+      @article.limited_slug.should == 'bad-limited'
     end
-  end
-
-  context 'with the default normalizer changed' do
-    @article = Article.new :authors => 'testing the default normalizer'
-    @article.authors.should == 'testing the default normalizer'
   end
 
 end
