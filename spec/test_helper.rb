@@ -31,7 +31,7 @@ AttributeNormalizer.configure do |config|
 
   config.default_normalizers = :strip, :special_normalizer, :blank
   config.default_attributes = :name, :title
-  config.add_default_attribute :authors, :strip => true, :blank => true
+  config.add_default_attribute :phone_number, :with => :phone
 
 end
 
@@ -42,6 +42,7 @@ require 'models/author'
 require 'models/journal'
 require 'models/article'
 require 'models/magazine'
+require 'models/publisher'
 
 
 RSpec.configure do |config|
