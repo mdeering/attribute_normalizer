@@ -5,6 +5,11 @@ ActiveRecord::Base.establish_connection({
 })
 
 ActiveRecord::Schema.define do
+  create_table :publishers, :force => true do |t|
+    t.string :name
+    t.string :phone_number
+  end
+
   create_table :authors, :force => true do |t|
     t.string :name
     t.string :nickname
@@ -28,7 +33,6 @@ ActiveRecord::Schema.define do
 
   create_table :articles, :force => true do |t|
     t.string  :title
-    t.string  :authors
     t.string  :slug
     t.string  :limited_slug
   end

@@ -8,9 +8,9 @@ module AttributeNormalizer
     def normalize_attributes(*attributes, &block)
       options = attributes.last.is_a?(::Hash) ? attributes.pop : {}
 
-      normalizers      = [ options.delete(:with) ].flatten.compact
-      normalizers      = [ options.delete(:before) ].flatten.compact if block_given? && normalizers.empty?
-      post_normalizers = [ options.delete(:after) ].flatten.compact if block_given?
+      normalizers      = [ options[:with] ].flatten.compact
+      normalizers      = [ options[:before] ].flatten.compact if block_given? && normalizers.empty?
+      post_normalizers = [ options[:after] ].flatten.compact if block_given?
 
       if normalizers.empty? && !block_given?
         normalizers = AttributeNormalizer.configuration.default_normalizers # the default normalizers
