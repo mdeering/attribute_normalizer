@@ -15,6 +15,8 @@ module AttributeNormalizer
       if normalizers.empty? && !block_given?
         normalizers = AttributeNormalizer.configuration.default_normalizers # the default normalizers
       end
+      
+      attributes = attributes.collect(&:to_s).uniq.sort
 
       attributes.each do |attribute|
         define_method "normalize_#{attribute}" do |value|
@@ -26,19 +28,18 @@ module AttributeNormalizer
             end
             normalizer = AttributeNormalizer.configuration.normalizers[normalizer_name]
             raise AttributeNormalizer::MissingNormalizer.new("No normalizer was found for #{normalizer_name}") unless normalizer
-            normalized = normalizer.respond_to?(:normalize) ? normalizer.normalize( normalized , options) : normalizer.call(normalized, options)
+            normalized = normalizer.respond_to?(:normalize) ? normalizer.normalize(normalized , options) : normalizer.call(normalized, options)
           end
 
-          normalized = block_given? ? yield(normalized) : normalized
-
           if block_given?
+            normalized = yield(normalized)
             post_normalizers.each do |normalizer_name|
               unless normalizer_name.kind_of?(Symbol)
                 normalizer_name, options = normalizer_name.keys[0], normalizer_name[ normalizer_name.keys[0] ]
               end
               normalizer = AttributeNormalizer.configuration.normalizers[normalizer_name]
               raise AttributeNormalizer::MissingNormalizer.new("No normalizer was found for #{normalizer_name}") unless normalizer
-              normalized = normalizer.respond_to?(:normalize) ? normalizer.normalize( normalized , options) : normalizer.call(normalized, options)
+              normalized = normalizer.respond_to?(:normalize) ? normalizer.normalize(normalized , options) : normalizer.call(normalized, options)
             end
           end
 
@@ -64,16 +65,20 @@ module AttributeNormalizer
     end
     alias :normalize_attribute :normalize_attributes
 
-    def normalize_default_attributes
+    def normalize_default_attributes(column_names)
       AttributeNormalizer.configuration.default_attributes.each do |attribute_name, options|
-        normalize_attribute(attribute_name, options) if self.column_names.include?(attribute_name)
+        normalize_attribute(attribute_name, options) if column_names.include?(attribute_name)
       end
     end
 
     def inherited(subclass)
       super
-      if subclass.name.present? && subclass.respond_to?(:table_exists?) && (subclass.table_exists? rescue false)
-        subclass.normalize_default_attributes
+      if subclass.name.present?
+        if subclass.respond_to?(:table_exists?) && (subclass.table_exists? rescue false)
+          subclass.normalize_default_attributes(subclass.column_names)
+        elsif (subclass.include?(Mongoid::Document) rescue false)
+          subclass.normalize_default_attributes(subclass.fields.keys)
+        end
       end
     end
   end
