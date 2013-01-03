@@ -65,7 +65,8 @@ module AttributeNormalizer
     end
     alias :normalize_attribute :normalize_attributes
 
-    def normalize_default_attributes(column_names)
+    def normalize_default_attributes
+      column_names = self.respond_to?(:column_names) ? self.column_names : self.respond_to?(:fields) ? self.fields.keys : []
       AttributeNormalizer.configuration.default_attributes.each do |attribute_name, options|
         normalize_attribute(attribute_name, options) if column_names.include?(attribute_name)
       end
@@ -73,12 +74,8 @@ module AttributeNormalizer
 
     def inherited(subclass)
       super
-      if subclass.name.present?
-        if subclass.respond_to?(:table_exists?) && (subclass.table_exists? rescue false)
-          subclass.normalize_default_attributes(subclass.column_names)
-        elsif (subclass.include?(Mongoid::Document) rescue false)
-          subclass.normalize_default_attributes(subclass.fields.keys)
-        end
+      if subclass.name.present? && subclass.respond_to?(:table_exists?) && (subclass.table_exists? rescue false)
+        subclass.normalize_default_attributes
       end
     end
   end

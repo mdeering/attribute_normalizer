@@ -70,9 +70,22 @@ include_attribute_normalizer(ActiveRecord::Base)    if defined?(ActiveRecord::Ba
 include_attribute_normalizer(CassandraObject::Base) if defined?(CassandraObject::Base)
 
 if defined?(Mongoid::Document)
+  Mongoid::Fields.option(:normalize) {}
   Mongoid::Document.class_eval do
     included do
       include AttributeNormalizer
+      
+      def self.field(name, options = {})
+        super.tap do |result|
+          if normalization_options = (options[:normalize] || AttributeNormalizer.configuration.default_attributes[name.to_s])
+            unless normalization_options.is_a? ::Hash
+              normalization_options = { :with => normalization_options }
+            end
+            normalize_attribute name, normalization_options
+            normalize_attribute "#{name}_translations=", normalization_options if self.respond_to? :"#{name}_translations="
+          end
+        end
+      end
     end
   end
 end
