@@ -3,4 +3,5 @@ coverage
 rdoc
 pkg
 *.gem
-.bundle.project
+.bundle
+.project
