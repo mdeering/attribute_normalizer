@@ -1,6 +1,6 @@
-gemspec
+source 'https://rubygems.org'
 
-source :rubygems
+gemspec
 
 group :development do
   gem 'activerecord'
@@ -10,5 +10,5 @@ group :development do
   gem 'mongoid'
   gem 'rake'
   gem 'rspec'
-  gem 'sqlite3-ruby'
+  gem 'sqlite3'
 end
