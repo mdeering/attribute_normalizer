@@ -1,6 +1,6 @@
-gemspec
+source 'https://rubygems.org'
 
-source :rubygems
+gemspec
 
 group :development do
   gem 'activerecord'
