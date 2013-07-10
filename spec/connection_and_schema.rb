@@ -36,4 +36,9 @@ ActiveRecord::Schema.define do
     t.string  :slug
     t.string  :limited_slug
   end
+  
+  create_table :users, :force => true do |t|
+    t.string :firstname
+    t.string :lastname
+  end
 end

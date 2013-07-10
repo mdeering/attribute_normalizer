@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'rspec'
 require 'active_record'
-require 'mongoid'
+#require 'mongoid'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 
@@ -43,7 +43,8 @@ require 'models/journal'
 require 'models/article'
 require 'models/magazine'
 require 'models/publisher'
-
+require 'models/person'
+require 'models/user'
 
 RSpec.configure do |config|
   config.include AttributeNormalizer::RSpecMatcher
