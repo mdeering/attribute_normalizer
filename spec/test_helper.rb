@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'rspec'
 require 'active_record'
-#require 'mongoid'
+require 'mongoid'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 
