@@ -5,6 +5,7 @@ module AttributeNormalizer
   end
 
   module ClassMethods
+
     def normalize_attributes(*attributes, &block)
       options = attributes.last.is_a?(::Hash) ? attributes.pop : {}
 
@@ -62,6 +63,7 @@ module AttributeNormalizer
 
       end
     end
+
     alias :normalize_attribute :normalize_attributes
 
     def normalize_default_attributes
@@ -70,11 +72,13 @@ module AttributeNormalizer
       end
     end
 
-    def inherited(subclass)
-      super
-      if subclass.name.present? && subclass.respond_to?(:table_exists?) && (subclass.table_exists? rescue false)
-        subclass.normalize_default_attributes
-      end
-    end
+    # def inherited(subclass)
+    #   super
+    #   if subclass.name.present? && subclass.respond_to?(:table_exists?) && (subclass.table_exists? rescue false)
+    #     subclass.normalize_default_attributes
+    #   end
+    # end
+
   end
+
 end

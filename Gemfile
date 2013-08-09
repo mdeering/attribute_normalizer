@@ -4,11 +4,14 @@ gemspec
 
 group :development do
   gem 'activerecord'
-  gem 'bson_ext', '~>1.7.0'
+  gem 'bson_ext'
   gem 'guard'
   gem 'guard-rspec'
-  gem 'mongoid', '2.5.1'
+  gem 'guard-yard'
+  gem 'mongoid'
+  gem 'pry'
   gem 'rake'
+  gem 'RedCloth'
   gem 'rspec'
   gem 'sqlite3'
 end

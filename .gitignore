@@ -1,6 +1,8 @@
 .DS_Store
 coverage
 rdoc
+doc
 pkg
 *.gem
 .bundle
+tmp

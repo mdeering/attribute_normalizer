@@ -1,1 +1,0 @@
-require 'attribute_normalizer'

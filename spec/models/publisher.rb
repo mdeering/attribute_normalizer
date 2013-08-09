@@ -7,6 +7,7 @@ class Publisher < ActiveRecord::Base
     super
   end
 
-  normalize_attribute :name, :with => :blank
+  normalize_attribute :name,         :with => :blank
+  normalize_attribute :phone_number, :with => :phone
 
 end

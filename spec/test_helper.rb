@@ -7,7 +7,6 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 
 require 'attribute_normalizer'
 
-
 AttributeNormalizer.configure do |config|
 
   config.normalizers[:currency] = lambda do |value, options|
@@ -30,8 +29,6 @@ AttributeNormalizer.configure do |config|
   end
 
   config.default_normalizers = :strip, :special_normalizer, :blank
-  config.default_attributes = :name, :title
-  config.add_default_attribute :phone_number, :with => :phone
 
 end
 
