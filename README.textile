@@ -169,14 +169,14 @@ p. If you are running RSpec there is matcher available for use.  Usage can been 
 h3. Rails 2
 
 <pre><code># spec/spec_helper.rb
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.include AttributeNormalizer::RSpecMatcher, :type => :models
 end</code></pre>
 
 h3. Rails 3
 
 <pre><code># spec/spec_helper.rb
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.include AttributeNormalizer::RSpecMatcher, :type => :model
 end</code></pre>
 
