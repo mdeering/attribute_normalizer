@@ -4,3 +4,4 @@ rdoc
 pkg
 *.gem
 .bundle
+.project
