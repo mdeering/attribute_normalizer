@@ -43,7 +43,8 @@ require 'models/journal'
 require 'models/article'
 require 'models/magazine'
 require 'models/publisher'
-
+require 'models/person'
+require 'models/user'
 
 RSpec.configure do |config|
   config.include AttributeNormalizer::RSpecMatcher
