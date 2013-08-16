@@ -5,5 +5,6 @@ class Author < ActiveRecord::Base
   normalize_attribute :first_name,   :with => :strip
   normalize_attribute :last_name,    :with => :blank
   normalize_attribute :phone_number, :with => :phone
+  normalize_attribute :biography,    :with => :whitespace
 
 end

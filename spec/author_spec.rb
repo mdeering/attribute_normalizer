@@ -19,6 +19,10 @@ describe Author do
     it { should normalize_attribute(:last_name).from('').to(nil) }
     it { should normalize_attribute(:last_name).from('  ').to(nil) }
     it { should normalize_attribute(:last_name).from(' this ').to(' this ') }
+
+    # :whitespace normalizer
+    it { should normalize_attribute(:biography).from("  this    line\nbreak ").to("this line\nbreak") }
+    it { should normalize_attribute(:biography).from('    ').to('') }
   end
 
   context 'on default attribute with the default normalizer changed' do
