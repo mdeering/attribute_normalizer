@@ -2,7 +2,7 @@ module AttributeNormalizer
   module Normalizers
     module WhitespaceNormalizer
       def self.normalize(value, options = {})
-        value.is_a?(String) ? value.strip.gsub(/[^\S\n]+/, ' ') : value
+        value.is_a?(String) ? value.gsub(/[^\S\n]+/, ' ').gsub(/\s+\n$/, "\n").strip : value
       end
     end
   end

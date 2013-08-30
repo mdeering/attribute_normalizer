@@ -22,6 +22,8 @@ describe Author do
 
     # :whitespace normalizer
     it { should normalize_attribute(:biography).from("  this    line\nbreak ").to("this line\nbreak") }
+    it { should normalize_attribute(:biography).from("\tthis\tline\nbreak ").to("this line\nbreak") }
+    it { should normalize_attribute(:biography).from("  \tthis  \tline  \nbreak \t  \nthis").to("this line\nbreak\nthis") }
     it { should normalize_attribute(:biography).from('    ').to('') }
   end
 

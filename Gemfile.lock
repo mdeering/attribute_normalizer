@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    attribute_normalizer (1.2.0.a)
+    attribute_normalizer (1.2.0.b)
 
 GEM
   remote: https://rubygems.org/
