@@ -27,7 +27,7 @@ h2. Change History
 ** Added out of the box support for CassandraObjects
 ** Included RSpec matcher _normalizer_attribute_
 ** Added the ability to define global normalizers
-** *Strings are no longer get 'strip' called on them before getting passed on to your defined normalization blocks*
+** *Strings no longer get 'strip' called on them before getting passed on to your defined normalization blocks*
 
 h2. Supported ORMs
 
@@ -109,7 +109,7 @@ AttributeNormalizer.configure do |config|
   # the default normalizers for each attribute (e.g. config.default_normalizers)
   # config.default_attributes = :name, :title
 
-  # Also, You can add an specific attribute to default_attributes using one or more normalizers:
+  # Also, You can add a specific attribute to default_attributes using one or more normalizers:
   # config.add_default_attribute :name, :with => :truncate
 end
 </code></pre>
@@ -133,7 +133,7 @@ The _normalize_attributes_ method is eager loaded into your ORM.  _normalize_att
     value.is_a?(String) ? value.titleize.strip : value
   end
 
-  # Or use a combination of normalizers plus a inline block.
+  # Or use a combination of normalizers plus an inline block.
   # the normalizers in the :with option will each be evalulated
   # in order and the result will be given to the block.
   # You could also use option :before in place of :with
@@ -141,7 +141,7 @@ The _normalize_attributes_ method is eager loaded into your ORM.  _normalize_att
     value.present? && value.is_a?(String) ? value.downcase.gsub(/\s+/, '-') : value
   end
 
-  # Use buildin normalizers before and after the evaluation of your inline
+  # Use builtin normalizers before and after the evaluation of your inline
   # block
   normalize_attribute :limited_slug, :before => [ :strip, :blank ], :after => [ { :truncate => { :length => 11, :omission => '' } } ] do |value|
     value.present? && value.is_a?(String) ? value.downcase.gsub(/\s+/, '-') : value
@@ -164,7 +164,7 @@ book.limited_slug # => 'pick-up-chi'
 
 h2. Test Helpers
 
-p. If you are running RSpec there is matcher available for use.  Usage can been seen above.  Include it as follows.
+p. If you are running RSpec there is a matcher available for use.  Usage can been seen above.  Include it as follows.
 
 h3. Rails 2
 
