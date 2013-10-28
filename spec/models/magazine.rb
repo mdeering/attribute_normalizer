@@ -6,7 +6,8 @@ class Magazine
                        :cnd_price,
                        :us_price,
                        :summary,
-                       :title
+                       :title,
+                       :sold
 
   normalize_attributes :name
   normalize_attribute  :us_price, :cnd_price, :with => :currency
@@ -21,5 +22,7 @@ class Magazine
   normalize_attributes :title do |value|
     value.is_a?(String) ? value.titleize.strip : value
   end
+
+  normalize_attribute :sold, with: :boolean
 
 end
