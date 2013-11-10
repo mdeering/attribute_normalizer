@@ -15,7 +15,7 @@ h1. 0.2.0
 
 h1. 0.1.2
 
-* -Re-factored to use 'super' calls so that so that we don't break any other gems/plugins or the call chain in general-
+* -Re-factored to use 'super' calls so that we don't break any other gems/plugins or the call chain in general-
 
 h1. 0.1.1
 
