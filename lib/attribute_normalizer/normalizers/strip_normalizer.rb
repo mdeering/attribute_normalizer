@@ -1,8 +1,10 @@
 module AttributeNormalizer
   module Normalizers
     module StripNormalizer
-      def self.normalize(value, options = {})
-        value.is_a?(String) ? value.strip : value
+      extend BaseNormalizer
+
+      def self.perform_normalization(value)
+        value.strip
       end
     end
   end

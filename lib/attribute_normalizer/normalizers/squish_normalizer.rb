@@ -1,8 +1,10 @@
 module AttributeNormalizer
   module Normalizers
     module SquishNormalizer
-      def self.normalize(value, options = {})
-        value.is_a?(String) ? value.strip.gsub(/\s+/, ' ') : value
+      extend BaseNormalizer
+
+      def self.perform_normalization(value)
+        value.strip.gsub(/\s+/, ' ')
       end
     end
   end

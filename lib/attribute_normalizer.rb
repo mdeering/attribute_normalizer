@@ -1,3 +1,4 @@
+require 'attribute_normalizer/normalizers/base_normalizer'
 require 'attribute_normalizer/normalizers/blank_normalizer'
 require 'attribute_normalizer/normalizers/phone_normalizer'
 require 'attribute_normalizer/normalizers/strip_normalizer'
