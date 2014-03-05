@@ -3,6 +3,7 @@ require 'attribute_normalizer/normalizers/phone_normalizer'
 require 'attribute_normalizer/normalizers/strip_normalizer'
 require 'attribute_normalizer/normalizers/squish_normalizer'
 require 'attribute_normalizer/normalizers/whitespace_normalizer'
+require 'attribute_normalizer/normalizers/boolean_normalizer'
 
 module AttributeNormalizer
 
@@ -35,7 +36,8 @@ module AttributeNormalizer
         :phone      => AttributeNormalizer::Normalizers::PhoneNormalizer,
         :squish     => AttributeNormalizer::Normalizers::SquishNormalizer,
         :strip      => AttributeNormalizer::Normalizers::StripNormalizer,
-        :whitespace => AttributeNormalizer::Normalizers::WhitespaceNormalizer
+        :whitespace => AttributeNormalizer::Normalizers::WhitespaceNormalizer,
+        :boolean    => AttributeNormalizer::Normalizers::BooleanNormalizer
       }
 
       @default_normalizers = [ :strip, :blank ]

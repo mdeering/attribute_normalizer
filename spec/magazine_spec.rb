@@ -27,4 +27,19 @@ describe Magazine do
       to('Some Really Interesting Title')
   end
 
+  it do
+    should normalize_attribute(:sold).
+      from('true').to(true)
+  end
+
+  it do
+    should normalize_attribute(:sold).
+      from('0').to(false)
+  end
+
+  it do
+    should normalize_attribute(:sold).
+      from('').to(nil)
+  end
+
 end
