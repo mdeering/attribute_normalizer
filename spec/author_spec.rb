@@ -13,7 +13,7 @@ describe Author do
     it { should normalize_attribute(:first_name).from('    ').to('') }
 
     # :squish normalizer
-    it { should normalize_attribute(:nickname).from(' this    nickname  ').to('this nickname') }
+    it { should normalize_attribute(:nickname).from(' hello    world  ').to('hello world') }
 
     # :blank normalizer
     it { should normalize_attribute(:last_name).from('').to(nil) }
