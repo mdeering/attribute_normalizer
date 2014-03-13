@@ -25,6 +25,10 @@ describe Author do
     it { should normalize_attribute(:biography).from("\tthis\tline\nbreak ").to("this line\nbreak") }
     it { should normalize_attribute(:biography).from("  \tthis  \tline  \nbreak \t  \nthis").to("this line\nbreak\nthis") }
     it { should normalize_attribute(:biography).from('    ').to('') }
+    
+    # :control_chars normalizer
+    it { should normalize_attribute(:bibliography).from("No \bcontrol\u0003 chars").to("No control chars") }
+    it { should normalize_attribute(:bibliography).from("Except for\tspaces.\r\nAll kinds").to("Except for\tspaces.\r\nAll kinds") }
   end
 
   context 'on default attribute with the default normalizer changed' do

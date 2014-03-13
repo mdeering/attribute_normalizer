@@ -17,6 +17,7 @@ ActiveRecord::Schema.define do
     t.string :last_name
     t.string :phone_number
     t.text   :biography
+    t.text   :bibliography
   end
 
   create_table :books, :force => true do |t|
