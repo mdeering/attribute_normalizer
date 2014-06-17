@@ -17,7 +17,7 @@ describe Book do
     end
 
     it 'should still reflect that the attribute has been changed through the call to super' do
-      lambda { @book.title = 'New Title' }.should change(@book, :title_changed?).from(false).to(true)
+      expect { @book.title = 'New Title' }.to change(@book, :title_changed?).from(false).to(true)
     end
   end
 
@@ -29,7 +29,7 @@ describe Book do
     end
 
     it "should reflect the change when the record is reloaded" do
-      lambda { @book.reload }.should change(@book, :title).from('Original Title').to('New Title')
+      expect { @book.reload }.to change(@book, :title).from('Original Title').to('New Title')
     end
   end
 
@@ -39,14 +39,16 @@ describe Book do
     end
 
     it "should apply normalizations to both attributes" do
-      @book.title.should  == 'Bad Title'
-      @book.author.should == 'Bad Author'
+      expect(@book.title).to eq('Bad Title')
+      expect(@book.author).to eq('Bad Author')
     end
   end
 
   context 'with the default normalizer changed' do
-    @book = Book.new :author => 'testing the default normalizer'
-    @book.author.should == 'testing the default normalizer'
+    it "only strips leading and trailing whitespace" do
+      @book = Book.new :author => ' testing the default normalizer '
+      expect(@book.author).to eq('testing the default normalizer')
+    end
   end
 
 end

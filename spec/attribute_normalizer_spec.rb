@@ -7,20 +7,20 @@ describe AttributeNormalizer do
       include AttributeNormalizer
     end
 
-    klass.should respond_to(:normalize_attributes)
-    klass.should respond_to(:normalize_attribute)
+    expect(klass).to respond_to(:normalize_attributes)
+    expect(klass).to respond_to(:normalize_attribute)
   end
 
   it 'should not fail due to database exceptions raised by table_exists?' do
     class PGError < RuntimeError; end
-    
+
     Class.new(ActiveRecord::Base) do
       def self.table_exists?
         raise PGError, "FATAL:  something bad happened trying to probe for table existence"
       end
-      
+
       include AttributeNormalizer
     end
-    
+
   end
 end
