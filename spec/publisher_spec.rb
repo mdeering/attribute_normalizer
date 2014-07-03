@@ -11,7 +11,10 @@ describe Publisher do
   context 'on custom writer method' do
     subject { Publisher.new(:name => 'Mike') }
     it { should normalize_attribute(:name).from('').to(nil) }
-    its(:custom_writer) { should be_true }
+    context 'custom_writer' do
+      subject { Publisher.new(:name => 'Mike').custom_writer }
+      it { should be(true) }
+    end
   end
 
 end
