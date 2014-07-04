@@ -13,7 +13,7 @@ describe Article do
     end
 
     it 'should still reflect that the attribute has been changed through the call to super' do
-      lambda { @article.title = 'New Title' }.should change(@article, :title_changed?).from(false).to(true)
+      expect{ @article.title = 'New Title' }.to change(@article, :title).from('Original Title').to('New Title')
     end
   end
 
@@ -25,7 +25,7 @@ describe Article do
     end
 
     it "should reflect the change when the record is reloaded" do
-      lambda { @article.reload }.should change(@article, :title).from('Original Title').to('New Title')
+      expect{ @article.reload }.to change(@article, :title).from('Original Title').to('New Title')
     end
   end
 
@@ -35,9 +35,15 @@ describe Article do
     end
 
     it "should apply normalizations to both attributes" do
-      @article.slug.should == 'bad-slug'
-      @article.limited_slug.should == 'bad-limited'
+      expect(@article.slug).to eq 'bad-slug'
+      expect(@article.limited_slug).to eq 'bad-limited'
     end
   end
 
+  context 'with the default normalizer changed' do
+    it "only strips leading and trailing whitespace" do
+      @book = Book.new :author => ' testing the default normalizer '
+      expect(@book.author).to eq('testing the default normalizer')
+    end
+  end
 end
