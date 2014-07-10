@@ -4,6 +4,7 @@ require 'attribute_normalizer/normalizers/strip_normalizer'
 require 'attribute_normalizer/normalizers/squish_normalizer'
 require 'attribute_normalizer/normalizers/whitespace_normalizer'
 require 'attribute_normalizer/normalizers/boolean_normalizer'
+require 'attribute_normalizer/normalizers/control_chars_normalizer'
 
 module AttributeNormalizer
 
@@ -32,12 +33,13 @@ module AttributeNormalizer
     def initialize
 
       @normalizers = {
-        :blank      => AttributeNormalizer::Normalizers::BlankNormalizer,
-        :phone      => AttributeNormalizer::Normalizers::PhoneNormalizer,
-        :squish     => AttributeNormalizer::Normalizers::SquishNormalizer,
-        :strip      => AttributeNormalizer::Normalizers::StripNormalizer,
-        :whitespace => AttributeNormalizer::Normalizers::WhitespaceNormalizer,
-        :boolean    => AttributeNormalizer::Normalizers::BooleanNormalizer
+        :blank         => AttributeNormalizer::Normalizers::BlankNormalizer,
+        :phone         => AttributeNormalizer::Normalizers::PhoneNormalizer,
+        :squish        => AttributeNormalizer::Normalizers::SquishNormalizer,
+        :strip         => AttributeNormalizer::Normalizers::StripNormalizer,
+        :whitespace    => AttributeNormalizer::Normalizers::WhitespaceNormalizer,
+        :boolean       => AttributeNormalizer::Normalizers::BooleanNormalizer,
+        :control_chars => AttributeNormalizer::Normalizers::ControlCharsNormalizer
       }
 
       @default_normalizers = [ :strip, :blank ]
