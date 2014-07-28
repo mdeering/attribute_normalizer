@@ -114,7 +114,7 @@ AttributeNormalizer.configure do |config|
 end
 </code></pre>
 
-The _normalize_attributes_ method is eager loaded into your ORM.  _normalize_attribute_ is aliased to _normalized_attributes_ and both can take in a single attribute or an array of attributes.
+The _normalize_attributes_ method is eager loaded into your ORM.  _normalize_attribute_ is aliased to _normalize_attributes_ and both can take in a single attribute or an array of attributes.
 
 <pre><code>class Book < ActiveRecord::Base
 
