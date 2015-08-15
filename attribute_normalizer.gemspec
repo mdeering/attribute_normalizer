@@ -12,8 +12,9 @@ Gem::Specification.new do |s|
   s.email        = [ 'mdeering@mdeering.com' ]
   s.homepage     = 'https://github.com/mdeering/attribute_normalizer'
 
-  s.summary      = ''
-  s.description  = ''
+  s.license      = 'MIT'
+  s.summary      = 'Configurable data normalization'
+  s.description  = 'Configurable attribute data normalization'
 
   s.require_path = 'lib'
 
