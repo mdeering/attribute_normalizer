@@ -8,7 +8,7 @@ group :development do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-yard'
-  gem 'mongoid'
+  gem 'mongoid', '> 4'
   gem 'pry'
   gem 'rake'
   gem 'RedCloth'

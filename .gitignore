@@ -1,8 +1,7 @@
-.DS_Store
+.bundle
+.yardoc
 coverage
 rdoc
 doc
 pkg
-*.gem
-.bundle
 tmp
