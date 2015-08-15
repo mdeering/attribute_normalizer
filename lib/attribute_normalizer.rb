@@ -24,7 +24,7 @@ module AttributeNormalizer
 
 
   class Configuration
-    attr_accessor :default_normalizers, :normalizers, :default_attributes
+    attr_accessor :default_normalizers, :normalizers
 
     def default_normalizers=(normalizers)
       @default_normalizers = normalizers.is_a?(Array) ? normalizers : [ normalizers ]
