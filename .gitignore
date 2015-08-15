@@ -1,7 +1,8 @@
 .bundle
 .yardoc
 coverage
-rdoc
 doc
+Gemfile.lock
 pkg
+rdoc
 tmp
