@@ -53,6 +53,7 @@ h3. Rails 2
 config.gem 'attribute_normalizer'</code></pre>
 
 h3. Rails 3
+
 <pre><code># Gemfile
 gem 'attribute_normalizer'</code></pre>
 
