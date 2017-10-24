@@ -57,7 +57,9 @@ module AttributeNormalizer
           end
         else
           define_method "#{attribute}=" do |value|
-            super(self.send(:"normalize_#{attribute}", value))
+            normalized_value = self.send(:"normalize_#{attribute}", value)
+            match = matched_attribute_method("#{attribute}=")
+            match ? attribute_missing(match, normalized_value) : super
           end
         end
 
