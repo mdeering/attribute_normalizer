@@ -1,6 +1,7 @@
 require File.dirname(File.expand_path(__FILE__)) + '/test_helper'
 
 describe Article do
+  it { should normalize_attribute(:title).from(" \u200b\u200cSocial Life at the Edge of Chaos  \u200d\u2060\ufeff  ").to('Social Life at the Edge of Chaos') }
   it { should normalize_attribute(:title).from(' Social Life at the Edge of Chaos    ').to('Social Life at the Edge of Chaos') }
   it { should normalize_attribute(:slug) }
   it { should normalize_attribute(:slug).from(' Social Life at the Edge of Chaos    ').to('social-life-at-the-edge-of-chaos') }
