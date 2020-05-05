@@ -30,7 +30,7 @@ module AttributeNormalizer
             normalized = normalizer.respond_to?(:normalize) ? normalizer.normalize( normalized , options) : normalizer.call(normalized, options)
           end
 
-          normalized = block_given? ? yield(normalized) : normalized
+          normalized = block_given? ? instance_exec(normalized, &block) : normalized
 
           if block_given?
             post_normalizers.each do |normalizer_name|

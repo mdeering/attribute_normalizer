@@ -10,4 +10,8 @@ class Publisher < ActiveRecord::Base
   normalize_attribute :name,         :with => :blank
   normalize_attribute :phone_number, :with => :phone
 
+  normalize_attribute :international_phone_number do |number|
+    self.country == 'fr' ? number.sub(/^0/,'+33') : number
+  end
+
 end
