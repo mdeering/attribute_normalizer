@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'activerecord'
+  gem 'activerecord', '~>4.2.11.3'
   gem 'bson_ext'
   gem 'guard'
   gem 'guard-rspec'
