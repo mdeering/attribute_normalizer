@@ -9,9 +9,9 @@ name: Ruby
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "master_1.2.0" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "master_1.2.0 ]
 
 permissions:
   contents: read
@@ -34,5 +34,6 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+        bundler: 2.4.0
     - name: Run tests
-      run: bundle exec rake
+      run: bundle exec rspec
