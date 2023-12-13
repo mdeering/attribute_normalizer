@@ -14,5 +14,5 @@ group :development do
   gem 'rake'
   gem 'RedCloth'
   gem 'rspec'
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.0'
 end
